@@ -105,7 +105,7 @@ Establish the backend development foundation and project conventions before impl
 
 * [ ] 0.1 Backend project initialization
 * [ ] 0.2 TypeScript configuration
-* [ ] 0.3 Express application foundation
+* [ ] 0.3 Fastify application foundation
 * [ ] 0.4 Environment/configuration management
 * [ ] 0.5 Control-plane MongoDB connection
 * [ ] 0.6 Error infrastructure

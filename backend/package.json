@@ -1,0 +1,30 @@
+{
+  "name": "shardflow-backend",
+  "version": "0.1.0",
+  "description": "ShardFlow V1 — Database infrastructure layer for multi-tenant MongoDB applications",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "shardflow",
+    "mongodb",
+    "multi-tenant",
+    "database",
+    "sharding"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "fastify": "^5.12.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

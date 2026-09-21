@@ -6,18 +6,23 @@
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "esModuleInterop": true, //makes easier for ts to work with packages written using common js while we use ES modules
+    "skipLibCheck": true, //dont check the declaration file of installed libraries
+    "forceConsistentCasingInFileNames": true, //prevents problems caused by different capitalization of filenames/import
+    "resolveJsonModule": true, //allows ts to import json files as modules 
+    "declaration": true, //generates .d.ts file .d -> describes the types exposed by that module
+    "declarationMap": true, //generated map connecting to generated .d.ts files back to original ts source
+    "sourceMap": true, //
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    "noFallthroughCasesInSwitch": true,
-    "isolatedModules": true
+    "noFallthroughCasesInSwitch": true, //prevents accidental switch-case falthrough
+    "isolatedModules": true //each file is treated as a seperate module
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

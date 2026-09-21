@@ -10,8 +10,6 @@
     "skipLibCheck": true, //dont check the declaration file of installed libraries
     "forceConsistentCasingInFileNames": true, //prevents problems caused by different capitalization of filenames/import
     "resolveJsonModule": true, //allows ts to import json files as modules 
-    "declaration": true, //generates .d.ts file .d -> describes the types exposed by that module
-    "declarationMap": true, //generated map connecting to generated .d.ts files back to original ts source
     "sourceMap": true, //
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,

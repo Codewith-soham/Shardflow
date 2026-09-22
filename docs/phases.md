@@ -103,10 +103,10 @@ Establish the backend development foundation and project conventions before impl
 
 ### Tasks
 
-* [ ] 0.1 Backend project initialization
-* [ ] 0.2 TypeScript configuration
-* [ ] 0.3 Fastify application foundation
-* [ ] 0.4 Environment/configuration management
+* [x] 0.1 Backend project initialization
+* [x] 0.2 TypeScript configuration
+* [x] 0.3 Fastify application foundation
+* [x] 0.4 Environment/configuration management
 * [ ] 0.5 Control-plane MongoDB connection
 * [ ] 0.6 Error infrastructure
 * [ ] 0.7 Validation infrastructure
@@ -496,6 +496,6 @@ A phase should not be marked complete merely because the code compiles.
 
 **Phase 0 — Project Foundation**
 
-**Current Task:** 0.1 Backend Project Initialization
+**Current Task:** 0.5 Control-plane MongoDB connection
 
-**Status:** `PLANNED`
+**Status:** `IN_PROGRESS`

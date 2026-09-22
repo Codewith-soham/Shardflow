@@ -249,14 +249,14 @@ ShardFlow V1 is being built with:
 | Layer              | Technology           |
 | ------------------ | -------------------- |
 | Backend            | Node.js              |
-| API                | Express.js           |
+| API                | Fastify              |
 | Metadata Database  | MongoDB              |
 | Customer Databases | MongoDB              |
 | Authentication     | Supabase Auth        |
 | Email              | Brevo                |
 | API Format         | REST / JSON          |
 | Frontend           | Planned              |
-| Language           | JavaScript / Node.js |
+| Language           | TypeScript / Node.js |
 
 The exact implementation may evolve as the project develops.
 

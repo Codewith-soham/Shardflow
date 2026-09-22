@@ -973,10 +973,10 @@ Current known technology direction:
 
 ```text
 Backend
-Node.js
+Node.js / TypeScript
 
 API Framework
-Express.js
+Fastify
 
 Primary Metadata Database
 MongoDB

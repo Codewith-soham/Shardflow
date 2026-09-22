@@ -6,13 +6,13 @@ For full product and architectural documentation, see the `docs/` directory at t
 
 ## Current Scope
 
-This is **Task 0.1 — Backend Project Initialization**. The backend currently provides:
+Tasks **0.1 – 0.4** are complete (Backend Initialization, TypeScript Configuration, Fastify App Foundation, Environment & Configuration Management). The backend currently provides:
 
-- A minimal Fastify application
-- TypeScript with strict type checking
-- ESM module system
+- Fastify application foundation (`src/app.ts`, `src/server.ts`)
+- Strict TypeScript configuration (`tsconfig.json`) with NodeNext ES module resolution
+- Environment configuration & validation (`src/config/index.ts`) for `PORT`, `HOST`, and `NODE_ENV`
 - A `/health` endpoint for verifying the server is running
-- The directory structure documented in `docs/architecture.md`
+- Directory structure documented in `docs/architecture.md`
 
 No business logic, database connections, authentication, or routing have been implemented yet.
 

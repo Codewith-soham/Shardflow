@@ -141,7 +141,7 @@ Implement the core control-plane data models and persistence layer.
 * [x] 1.3 Project model
 * [x] 1.4 Project repository
 * [x] 1.5 API key model
-* [ ] 1.6 API key repository
+* [x] 1.6 API key repository
 * [ ] 1.7 Repository testing
 
 ### Exit Criteria

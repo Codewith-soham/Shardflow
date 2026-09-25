@@ -138,7 +138,7 @@ Implement the core control-plane data models and persistence layer.
 
 * [x] 1.1 User model
 * [x] 1.2 User repository
-* [ ] 1.3 Project model
+* [x] 1.3 Project model
 * [ ] 1.4 Project repository
 * [ ] 1.5 API key model
 * [ ] 1.6 API key repository

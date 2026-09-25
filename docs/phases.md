@@ -128,7 +128,7 @@ Establish the backend development foundation and project conventions before impl
 
 # 6. Phase 1 — Control Plane Foundation
 
-**Status:** `PLANNED`
+**Status:** `COMPLETED`
 
 ### Objective
 
@@ -142,7 +142,7 @@ Implement the core control-plane data models and persistence layer.
 * [x] 1.4 Project repository
 * [x] 1.5 API key model
 * [x] 1.6 API key repository
-* [ ] 1.7 Repository testing
+* [x] 1.7 Repository testing
 
 ### Exit Criteria
 

@@ -6,7 +6,8 @@ import { UserStatus, type User } from '../models/user.model.js';
 import { ProjectRepository } from './project.repository.js';
 import { ProjectStatus, type Project } from '../models/project.model.js';
 import { ApiKeyRepository } from './api-key.repository.js';
-import { type ApiKey, hashApiKey } from '../models/api-key.model.js';
+import { type ApiKey, hashApiKey, generateApiKey } from '../models/api-key.model.js';
+import { initControlPlaneIndexes } from '../index.js';
 
 describe('Control Plane Repositories - Generalized Test Suite', () => {
   describe('UserRepository', () => {
@@ -766,6 +767,242 @@ describe('Control Plane Repositories - Generalized Test Suite', () => {
       expect(secondDelete).toBe(false);
     });
   });
+
+  describe('End-to-End Persistence Lifecycle & Cross-Repository Integrity', () => {
+    it('initializes all control plane indexes concurrently across repositories', async () => {
+      const mockCreatedIndexes: Record<string, any[]> = {
+        users: [],
+        projects: [],
+        apiKeys: [],
+      };
+
+      const mockDb = {
+        collection: vi.fn((colName: string) => ({
+          createIndex: vi.fn(async (spec: any, options: any) => {
+            mockCreatedIndexes[colName]?.push({ spec, options });
+            return 'index_created';
+          }),
+        })),
+      } as unknown as Db;
+
+      await initControlPlaneIndexes(mockDb);
+
+      expect(mockDb.collection).toHaveBeenCalledWith('users');
+      expect(mockDb.collection).toHaveBeenCalledWith('projects');
+      expect(mockDb.collection).toHaveBeenCalledWith('apiKeys');
+
+      // Users: 2 indexes (supabaseUserId unique, email)
+      expect(mockCreatedIndexes.users).toHaveLength(2);
+      // Projects: 2 indexes (ownerId, ownerId + name unique)
+      expect(mockCreatedIndexes.projects).toHaveLength(2);
+      // ApiKeys: 3 indexes (projectId, keyHash unique, projectId + revokedAt)
+      expect(mockCreatedIndexes.apiKeys).toHaveLength(3);
+    });
+
+    it('executes complete cross-entity persistence workflow: User -> Project -> API Key', async () => {
+      // In-memory collections to simulate multi-collection MongoDB DB
+      const userStore = new Map<string, User>();
+      const projectStore = new Map<string, Project>();
+      const apiKeyStore = new Map<string, ApiKey>();
+
+      const mockDb = {
+        collection: vi.fn((colName: string) => {
+          if (colName === 'users') {
+            return {
+              createIndex: vi.fn(),
+              insertOne: vi.fn(async (doc: any) => {
+                userStore.set(doc._id.toString(), { ...doc });
+                return { acknowledged: true, insertedId: doc._id };
+              }),
+              findOne: vi.fn(async (filter: any) => {
+                for (const item of userStore.values()) {
+                  if (filter._id && filter._id.equals(item._id)) return item;
+                  if (filter.supabaseUserId && item.supabaseUserId === filter.supabaseUserId) return item;
+                }
+                return null;
+              }),
+              findOneAndUpdate: vi.fn(async (filter: any, update: any) => {
+                for (const [id, item] of userStore.entries()) {
+                  if (filter._id && filter._id.equals(item._id)) {
+                    const updated = { ...item, ...update.$set };
+                    userStore.set(id, updated);
+                    return updated;
+                  }
+                }
+                return null;
+              }),
+            };
+          }
+          if (colName === 'projects') {
+            return {
+              createIndex: vi.fn(),
+              insertOne: vi.fn(async (doc: any) => {
+                projectStore.set(doc._id.toString(), { ...doc });
+                return { acknowledged: true, insertedId: doc._id };
+              }),
+              findOne: vi.fn(async (filter: any) => {
+                for (const item of projectStore.values()) {
+                  let matches = true;
+                  if (filter._id && !filter._id.equals(item._id)) matches = false;
+                  if (filter.ownerId && !filter.ownerId.equals(item.ownerId)) matches = false;
+                  if (matches) return item;
+                }
+                return null;
+              }),
+              find: vi.fn((filter: any) => {
+                const results: Project[] = [];
+                for (const item of projectStore.values()) {
+                  if (filter.ownerId && filter.ownerId.equals(item.ownerId)) {
+                    results.push(item);
+                  }
+                }
+                return { toArray: async () => results };
+              }),
+              findOneAndUpdate: vi.fn(async (filter: any, update: any) => {
+                for (const [id, item] of projectStore.entries()) {
+                  let matches = true;
+                  if (filter._id && !filter._id.equals(item._id)) matches = false;
+                  if (filter.ownerId && !filter.ownerId.equals(item.ownerId)) matches = false;
+                  if (matches) {
+                    const updated = { ...item, ...update.$set };
+                    projectStore.set(id, updated);
+                    return updated;
+                  }
+                }
+                return null;
+              }),
+            };
+          }
+          if (colName === 'apiKeys') {
+            return {
+              createIndex: vi.fn(),
+              insertOne: vi.fn(async (doc: any) => {
+                apiKeyStore.set(doc._id.toString(), { ...doc });
+                return { acknowledged: true, insertedId: doc._id };
+              }),
+              findOne: vi.fn(async (filter: any) => {
+                for (const item of apiKeyStore.values()) {
+                  let matches = true;
+                  if (filter._id && !filter._id.equals(item._id)) matches = false;
+                  if (filter.projectId && !filter.projectId.equals(item.projectId)) matches = false;
+                  if (filter.keyHash && item.keyHash !== filter.keyHash) matches = false;
+                  if (filter.revokedAt === null && item.revokedAt !== null) matches = false;
+                  if (filter.$or) {
+                    const passes = filter.$or.some((c: any) => {
+                      if (c.expiresAt === null && item.expiresAt === null) return true;
+                      if (c.expiresAt?.$gt && item.expiresAt && item.expiresAt > c.expiresAt.$gt) return true;
+                      return false;
+                    });
+                    if (!passes) matches = false;
+                  }
+                  if (matches) return item;
+                }
+                return null;
+              }),
+              find: vi.fn((filter: any) => {
+                const results: ApiKey[] = [];
+                for (const item of apiKeyStore.values()) {
+                  if (filter.projectId && filter.projectId.equals(item.projectId)) {
+                    if (filter.revokedAt === null && item.revokedAt !== null) continue;
+                    results.push(item);
+                  }
+                }
+                return { toArray: async () => results };
+              }),
+              findOneAndUpdate: vi.fn(async (filter: any, update: any) => {
+                for (const [id, item] of apiKeyStore.entries()) {
+                  let matches = true;
+                  if (filter._id && !filter._id.equals(item._id)) matches = false;
+                  if (filter.projectId && !filter.projectId.equals(item.projectId)) matches = false;
+                  if (matches) {
+                    const updated = { ...item, ...update.$set };
+                    apiKeyStore.set(id, updated);
+                    return updated;
+                  }
+                }
+                return null;
+              }),
+            };
+          }
+          throw new Error(`Unknown collection: ${colName}`);
+        }),
+      } as unknown as Db;
+
+      const userRepo = new UserRepository(mockDb);
+      const projectRepo = new ProjectRepository(mockDb);
+      const apiKeyRepo = new ApiKeyRepository(mockDb);
+
+      // 1. User registers via Supabase auth identity
+      const user = await userRepo.create({
+        supabaseUserId: 'supabase_auth_id_999',
+        email: 'founder@saas.com',
+        name: 'Saas Founder',
+      });
+      expect(user._id).toBeInstanceOf(ObjectId);
+      expect(user.status).toBe(UserStatus.ACTIVE);
+
+      // 2. User creates a Project
+      const project = await projectRepo.create({
+        ownerId: user._id,
+        name: 'Production ShardFlow Cluster',
+        description: 'Multi-tenant routing instance',
+      });
+      expect(project._id).toBeInstanceOf(ObjectId);
+      expect(project.ownerId.equals(user._id)).toBe(true);
+
+      // 3. Unauthorized access check: Another user cannot view or mutate the project
+      const unauthorizedUserId = new ObjectId();
+      const unauthorizedLookup = await projectRepo.findByIdAndOwnerId(project._id, unauthorizedUserId);
+      expect(unauthorizedLookup).toBeNull();
+
+      const unauthorizedUpdate = await projectRepo.updateByIdAndOwnerId(
+        project._id,
+        unauthorizedUserId,
+        { name: 'Hijacked' }
+      );
+      expect(unauthorizedUpdate).toBeNull();
+
+      // 4. Project generates an API key
+      const { rawKey, keyHash } = generateApiKey();
+      const apiKey = await apiKeyRepo.create({
+        projectId: project._id,
+        name: 'Production Data-Plane Key',
+        keyHash,
+      });
+      expect(apiKey.projectId.equals(project._id)).toBe(true);
+      expect(apiKey.revokedAt).toBeNull();
+
+      // 5. Data plane authenticates incoming request with rawKey
+      const incomingHash = hashApiKey(rawKey);
+      const resolvedKey = await apiKeyRepo.findActiveByKeyHash(incomingHash);
+      expect(resolvedKey).not.toBeNull();
+      expect(resolvedKey?.projectId.equals(project._id)).toBe(true);
+
+      // 6. Data plane records successful invocation
+      const usedTimestamp = new Date();
+      const updatedKey = await apiKeyRepo.updateLastUsed(resolvedKey!._id, usedTimestamp);
+      expect(updatedKey?.lastUsedAt).toEqual(usedTimestamp);
+
+      // 7. Security: Another project cannot revoke this key
+      const otherProjectId = new ObjectId();
+      const unauthorizedRevocation = await apiKeyRepo.revoke(apiKey._id, otherProjectId);
+      expect(unauthorizedRevocation).toBeNull();
+
+      // 8. Legitimate owner revokes the key
+      const revoked = await apiKeyRepo.revoke(apiKey._id, project._id);
+      expect(revoked).not.toBeNull();
+      expect(revoked?.revokedAt).toBeInstanceOf(Date);
+
+      // 9. Subsequent Data Plane requests immediately fail auth
+      const rejectedKey = await apiKeyRepo.findActiveByKeyHash(incomingHash);
+      expect(rejectedKey).toBeNull();
+
+      // 10. User disables the project
+      const disabledProject = await projectRepo.disable(project._id, user._id);
+      expect(disabledProject?.status).toBe(ProjectStatus.DISABLED);
+    });
+  });
 });
+
 
 

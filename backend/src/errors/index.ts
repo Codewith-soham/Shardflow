@@ -1,2 +1,3 @@
-// ShardFlow — Errors module
-// Error infrastructure will be implemented in Phase 0, Task 0.6.
+export * from './codes.js';
+export * from './app-error.js';
+export * from './error-handler.js';

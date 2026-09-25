@@ -95,7 +95,7 @@ Status values:
 
 # 5. Phase 0 — Project Foundation
 
-**Status:** `PLANNED`
+**Status:** `COMPLETED`
 
 ### Objective
 
@@ -107,12 +107,12 @@ Establish the backend development foundation and project conventions before impl
 * [x] 0.2 TypeScript configuration
 * [x] 0.3 Fastify application foundation
 * [x] 0.4 Environment/configuration management
-* [ ] 0.5 Control-plane MongoDB connection
-* [ ] 0.6 Error infrastructure
-* [ ] 0.7 Validation infrastructure
-* [ ] 0.8 Logging foundation
-* [ ] 0.9 Testing foundation
-* [ ] 0.10 Development scripts and tooling
+* [x] 0.5 Control-plane MongoDB connection
+* [x] 0.6 Error infrastructure
+* [x] 0.7 Validation infrastructure
+* [x] 0.8 Logging foundation
+* [x] 0.9 Testing foundation
+* [x] 0.10 Development scripts and tooling
 
 ### Exit Criteria
 
@@ -492,10 +492,13 @@ A phase should not be marked complete merely because the code compiles.
 * [x] Error codes
 * [x] Development phases
 
+## Completed Phases
+* [x] Phase 0 — Project Foundation
+
 ## Current Phase
 
-**Phase 0 — Project Foundation**
+**Phase 1 — Control Plane Foundation**
 
-**Current Task:** 0.5 Control-plane MongoDB connection
+**Current Task:** 1.1 User model
 
-**Status:** `IN_PROGRESS`
+**Status:** `PLANNED`

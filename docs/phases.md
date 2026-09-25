@@ -136,7 +136,7 @@ Implement the core control-plane data models and persistence layer.
 
 ### Tasks
 
-* [ ] 1.1 User model
+* [x] 1.1 User model
 * [ ] 1.2 User repository
 * [ ] 1.3 Project model
 * [ ] 1.4 Project repository
@@ -499,6 +499,6 @@ A phase should not be marked complete merely because the code compiles.
 
 **Phase 1 — Control Plane Foundation**
 
-**Current Task:** 1.1 User model
+**Current Task:** 1.2 User repository
 
-**Status:** `PLANNED`
+**Status:** `IN_PROGRESS`

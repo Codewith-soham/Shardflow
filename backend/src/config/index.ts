@@ -13,9 +13,9 @@ export function loadConfig(): AppConfig {
     throw new Error(`Invalid PORT: ${process.env['PORT']}`);
   }
 
-  const mongodbUri = process.env['MONGODB_URL'];
+  const mongodbUri = process.env['MONGODB_URI'];
   if (!mongodbUri || mongodbUri.trim() === '') {
-    throw new Error('Missing required environment variable: MONGODB_URL');
+    throw new Error('Missing required environment variable: MONGODB_URI');
   }
 
   const mongodbDatabase = process.env['MONGODB_DATABASE']?.trim() || 'shardflow';

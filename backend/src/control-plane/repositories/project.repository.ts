@@ -11,12 +11,14 @@ import {
 export const PROJECTS_COLLECTION = 'projects';
 
 export class ProjectRepository {
-  private readonly db: Db;
-  private readonly collection: Collection<Project>;
+  private readonly db?: Db;
 
   constructor(db?: Db) {
-    this.db = db ?? getDatabase();
-    this.collection = this.db.collection<Project>(PROJECTS_COLLECTION);
+    this.db = db;
+  }
+
+  private get collection(): Collection<Project> {
+    return (this.db ?? getDatabase()).collection<Project>(PROJECTS_COLLECTION);
   }
 
   /**

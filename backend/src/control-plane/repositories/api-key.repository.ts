@@ -10,12 +10,14 @@ import {
 export const API_KEYS_COLLECTION = 'apiKeys';
 
 export class ApiKeyRepository {
-  private readonly db: Db;
-  private readonly collection: Collection<ApiKey>;
+  private readonly db?: Db;
 
   constructor(db?: Db) {
-    this.db = db ?? getDatabase();
-    this.collection = this.db.collection<ApiKey>(API_KEYS_COLLECTION);
+    this.db = db;
+  }
+
+  private get collection(): Collection<ApiKey> {
+    return (this.db ?? getDatabase()).collection<ApiKey>(API_KEYS_COLLECTION);
   }
 
   /**

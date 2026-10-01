@@ -5,6 +5,13 @@ import { closeDatabase, isDatabaseConnected } from './database/index.js';
 import { errorHandler, notFoundHandler } from './errors/index.js';
 import { createLoggerOptions } from './observability/index.js';
 
+import { createSupabaseClient, AuthService } from './auth/index.js';
+import { UserRepository, registerMeRoutes } from './control-plane/index.js';
+
+export interface AppDependencies {
+  authService?: AuthService;
+}
+
 /**
  * Creates and configures the Fastify application instance.
  *
@@ -12,7 +19,10 @@ import { createLoggerOptions } from './observability/index.js';
  * It configures logging, error handling, not found handling, lifecycle hooks, and baseline routes.
  * It does NOT start the HTTP server — that responsibility belongs to server.ts.
  */
-export async function buildApp(config: AppConfig): Promise<FastifyInstance> {
+export async function buildApp(
+  config: AppConfig,
+  dependencies: AppDependencies = {}
+): Promise<FastifyInstance> {
   const app = Fastify({
     logger: createLoggerOptions(config),
   });
@@ -21,7 +31,6 @@ export async function buildApp(config: AppConfig): Promise<FastifyInstance> {
   app.setErrorHandler(errorHandler);
   app.setNotFoundHandler(notFoundHandler);
 
-  
   // Cleanly close database connections when Fastify server is closed
   app.addHook('onClose', async () => {
     await closeDatabase();
@@ -35,5 +44,17 @@ export async function buildApp(config: AppConfig): Promise<FastifyInstance> {
     };
   });
 
+  // Initialize Auth Service & Control Plane Routes
+  const supabaseAuth = createSupabaseClient(config.supabaseUrl, config.supabaseAnonKey);
+  const authService =
+    dependencies.authService ??
+    new AuthService({
+      userRepository: new UserRepository(),
+      supabaseAuth: supabaseAuth.auth,
+    });
+
+  registerMeRoutes(app, authService);
+
   return app;
 }
+

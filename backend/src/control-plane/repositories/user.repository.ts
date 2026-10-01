@@ -11,12 +11,14 @@ import {
 export const USERS_COLLECTION = 'users';
 
 export class UserRepository {
-  private readonly db: Db;
-  private readonly collection: Collection<User>;
+  private readonly db?: Db;
 
   constructor(db?: Db) {
-    this.db = db ?? getDatabase();
-    this.collection = this.db.collection<User>(USERS_COLLECTION);
+    this.db = db;
+  }
+
+  private get collection(): Collection<User> {
+    return (this.db ?? getDatabase()).collection<User>(USERS_COLLECTION);
   }
 
   /**

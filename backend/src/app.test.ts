@@ -11,6 +11,8 @@ describe('Application Foundation (app.ts)', () => {
     nodeEnv: 'test',
     mongodbUri: 'mongodb://localhost:27017',
     mongodbDatabase: 'shardflow_test',
+    supabaseUrl: 'https://test.supabase.co',
+    supabaseAnonKey: 'test-anon-key',
   };
 
   it('builds the Fastify app instance and responds to /health', async () => {

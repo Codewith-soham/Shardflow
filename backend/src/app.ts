@@ -6,10 +6,19 @@ import { errorHandler, notFoundHandler } from './errors/index.js';
 import { createLoggerOptions } from './observability/index.js';
 
 import { createSupabaseClient, AuthService } from './auth/index.js';
-import { UserRepository, registerMeRoutes } from './control-plane/index.js';
+import {
+  UserRepository,
+  ProjectRepository,
+  ProjectService,
+  ProjectController,
+  registerMeRoutes,
+  registerProjectRoutes,
+} from './control-plane/index.js';
 
 export interface AppDependencies {
   authService?: AuthService;
+  projectService?: ProjectService;
+  projectController?: ProjectController;
 }
 
 /**
@@ -53,7 +62,13 @@ export async function buildApp(
       supabaseAuth: supabaseAuth.auth,
     });
 
+  const projectService =
+    dependencies.projectService ?? new ProjectService(new ProjectRepository());
+  const projectController =
+    dependencies.projectController ?? new ProjectController(projectService);
+
   registerMeRoutes(app, authService);
+  registerProjectRoutes(app, authService, projectController);
 
   return app;
 }

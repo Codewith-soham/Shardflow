@@ -7,7 +7,7 @@ export class UserController {
   /**
    * Handles GET /api/v1/me
    */
-  async getCurrentUser(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+  async getCurrentUser(request: FastifyRequest, _reply: FastifyReply) {
     const user = request.user;
 
     if (!user) {
@@ -17,7 +17,7 @@ export class UserController {
       );
     }
 
-    const response = {
+    return {
       success: true,
       data: {
         id: user._id.toString(),
@@ -27,7 +27,5 @@ export class UserController {
       },
       message: 'User retrieved successfully',
     };
-
-    reply.status(200).send(response);
   }
 }

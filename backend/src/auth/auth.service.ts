@@ -1,3 +1,5 @@
+//lies the auth business logic
+
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 
 import { ErrorCode } from '../errors/codes.js';

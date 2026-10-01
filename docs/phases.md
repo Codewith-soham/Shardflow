@@ -155,7 +155,7 @@ Implement the core control-plane data models and persistence layer.
 
 # 7. Phase 2 — Authentication & Project Management
 
-**Status:** `PLANNED`
+**Status:** `IN PROGRESS`
 
 ### Objective
 
@@ -163,13 +163,13 @@ Allow users to authenticate, create projects, and manage project API credentials
 
 ### Tasks
 
-* [ ] 2.1 Supabase authentication integration
-* [ ] 2.2 Authentication middleware
-* [ ] 2.3 User synchronization
-* [ ] 2.4 Current-user endpoint
-* [ ] 2.5 Project creation
-* [ ] 2.6 Project retrieval
-* [ ] 2.7 Project management
+* [x] 2.1 Supabase authentication integration
+* [x] 2.2 Authentication middleware
+* [x] 2.3 User synchronization
+* [x] 2.4 Current-user endpoint
+* [x] 2.5 Project creation
+* [x] 2.6 Project retrieval
+* [x] 2.7 Project management
 * [ ] 2.8 API key generation
 * [ ] 2.9 API key management
 * [ ] 2.10 Authentication and project tests
@@ -494,11 +494,12 @@ A phase should not be marked complete merely because the code compiles.
 
 ## Completed Phases
 * [x] Phase 0 — Project Foundation
+* [x] Phase 1 — Control Plane Foundation
 
 ## Current Phase
 
-**Phase 1 — Control Plane Foundation**
+**Phase 2 — Authentication & Project Management**
 
-**Current Task:** 1.3 Project model
+**Current Task:** 2.8 API key generation
 
 **Status:** `IN_PROGRESS`

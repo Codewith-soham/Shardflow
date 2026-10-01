@@ -6,8 +6,11 @@ import { ApiKeyRepository } from './repositories/api-key.repository.js';
 // ShardFlow — Control Plane module
 export * from './models/index.js';
 export * from './repositories/index.js';
+export * from './services/project.service.js';
 export * from './controllers/user.controller.js';
+export * from './controllers/project.controller.js';
 export * from './routes/me.routes.js';
+export * from './routes/project.routes.js';
 
 /**
  * Ensures required indexes across all control-plane collections (users, projects, apiKeys)

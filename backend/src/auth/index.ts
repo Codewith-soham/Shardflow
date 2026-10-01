@@ -1,2 +1,3 @@
-// ShardFlow — Auth module
-// Authentication will be implemented in Phase 2 (Supabase Auth integration).
+export * from './supabase.client.js';
+export * from './auth.service.js';
+export * from './auth.middleware.js';

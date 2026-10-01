@@ -9,16 +9,22 @@ import { createSupabaseClient, AuthService } from './auth/index.js';
 import {
   UserRepository,
   ProjectRepository,
+  ApiKeyRepository,
   ProjectService,
+  ApiKeyService,
   ProjectController,
+  ApiKeyController,
   registerMeRoutes,
   registerProjectRoutes,
+  registerApiKeyRoutes,
 } from './control-plane/index.js';
 
 export interface AppDependencies {
   authService?: AuthService;
   projectService?: ProjectService;
   projectController?: ProjectController;
+  apiKeyService?: ApiKeyService;
+  apiKeyController?: ApiKeyController;
 }
 
 /**
@@ -67,8 +73,15 @@ export async function buildApp(
   const projectController =
     dependencies.projectController ?? new ProjectController(projectService);
 
+  const apiKeyService =
+    dependencies.apiKeyService ??
+    new ApiKeyService(new ApiKeyRepository(), projectService);
+  const apiKeyController =
+    dependencies.apiKeyController ?? new ApiKeyController(apiKeyService);
+
   registerMeRoutes(app, authService);
   registerProjectRoutes(app, authService, projectController);
+  registerApiKeyRoutes(app, authService, apiKeyController);
 
   return app;
 }

@@ -155,7 +155,7 @@ Implement the core control-plane data models and persistence layer.
 
 # 7. Phase 2 — Authentication & Project Management
 
-**Status:** `IN PROGRESS`
+**Status:** `COMPLETED`
 
 ### Objective
 
@@ -170,9 +170,9 @@ Allow users to authenticate, create projects, and manage project API credentials
 * [x] 2.5 Project creation
 * [x] 2.6 Project retrieval
 * [x] 2.7 Project management
-* [ ] 2.8 API key generation
-* [ ] 2.9 API key management
-* [ ] 2.10 Authentication and project tests
+* [x] 2.8 API key generation
+* [x] 2.9 API key management
+* [x] 2.10 Authentication and project tests
 
 ### Exit Criteria
 

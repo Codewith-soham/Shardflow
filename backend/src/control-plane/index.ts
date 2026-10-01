@@ -7,10 +7,13 @@ import { ApiKeyRepository } from './repositories/api-key.repository.js';
 export * from './models/index.js';
 export * from './repositories/index.js';
 export * from './services/project.service.js';
+export * from './services/api-key.service.js';
 export * from './controllers/user.controller.js';
 export * from './controllers/project.controller.js';
+export * from './controllers/api-key.controller.js';
 export * from './routes/me.routes.js';
 export * from './routes/project.routes.js';
+export * from './routes/api-key.routes.js';
 
 /**
  * Ensures required indexes across all control-plane collections (users, projects, apiKeys)

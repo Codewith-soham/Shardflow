@@ -232,7 +232,7 @@ Shard credentials must be handled securely.
 
 # 9. Phase 4 — Data Plane Core
 
-**Status:** `PLANNED`
+**Status:** `COMPLETED`
 
 ### Objective
 
@@ -240,15 +240,15 @@ Implement the core request-processing path used by customer applications.
 
 ### Tasks
 
-* [ ] 4.1 Data-plane API foundation
-* [ ] 4.2 API-key authentication
-* [ ] 4.3 Project resolution
-* [ ] 4.4 Request validation
-* [ ] 4.5 Operation representation
-* [ ] 4.6 Database operation abstraction
-* [ ] 4.7 Database executor
-* [ ] 4.8 Response handling
-* [ ] 4.9 Data-plane tests
+* [x] 4.1 Data-plane API foundation
+* [x] 4.2 API-key authentication
+* [x] 4.3 Project resolution
+* [x] 4.4 Request validation
+* [x] 4.5 Operation representation
+* [x] 4.6 Database operation abstraction
+* [x] 4.7 Database executor
+* [x] 4.8 Response handling
+* [x] 4.9 Data-plane tests
 
 ### Exit Criteria
 
@@ -495,11 +495,14 @@ A phase should not be marked complete merely because the code compiles.
 ## Completed Phases
 * [x] Phase 0 — Project Foundation
 * [x] Phase 1 — Control Plane Foundation
+* [x] Phase 2 — Authentication & Project Management
+* [x] Phase 3 — Shard Management
+* [x] Phase 4 — Data Plane Core
 
 ## Current Phase
 
-**Phase 2 — Authentication & Project Management**
+**Phase 5 — Routing & Metadata**
 
-**Current Task:** 2.8 API key generation
+**Current Task:** 5.1 Routing abstraction
 
-**Status:** `IN_PROGRESS`
+**Status:** `PLANNED`

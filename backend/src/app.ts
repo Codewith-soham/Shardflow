@@ -22,6 +22,12 @@ import {
   registerApiKeyRoutes,
   registerShardRoutes,
 } from './control-plane/index.js';
+import {
+  DataPlaneService,
+  DataPlaneController,
+  type DataPlaneAuthOptions,
+  registerDataPlaneRoutes,
+} from './data-plane/index.js';
 
 export interface AppDependencies {
   authService?: AuthService;
@@ -31,6 +37,9 @@ export interface AppDependencies {
   apiKeyController?: ApiKeyController;
   shardService?: ShardService;
   shardController?: ShardController;
+  dataPlaneService?: DataPlaneService;
+  dataPlaneController?: DataPlaneController;
+  dataPlaneAuthOptions?: DataPlaneAuthOptions;
 }
 
 /**
@@ -95,6 +104,13 @@ export async function buildApp(
   registerProjectRoutes(app, authService, projectController);
   registerApiKeyRoutes(app, authService, apiKeyController);
   registerShardRoutes(app, authService, shardController);
+
+  const dataPlaneService =
+    dependencies.dataPlaneService ?? new DataPlaneService();
+  const dataPlaneController =
+    dependencies.dataPlaneController ?? new DataPlaneController(dataPlaneService);
+
+  registerDataPlaneRoutes(app, dataPlaneController, dependencies.dataPlaneAuthOptions);
 
   return app;
 }

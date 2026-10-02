@@ -10,14 +10,29 @@ import {
   UserRepository,
   ProjectRepository,
   ApiKeyRepository,
+  ShardRepository,
   ProjectService,
   ApiKeyService,
+  ShardService,
   ProjectController,
   ApiKeyController,
+  ShardController,
+  RoutingService,
+  RoutingController,
+  TenantMappingController,
   registerMeRoutes,
   registerProjectRoutes,
   registerApiKeyRoutes,
+  registerShardRoutes,
+  registerRoutingRoutes,
+  registerTenantMappingRoutes,
 } from './control-plane/index.js';
+import {
+  DataPlaneService,
+  DataPlaneController,
+  type DataPlaneAuthOptions,
+  registerDataPlaneRoutes,
+} from './data-plane/index.js';
 
 export interface AppDependencies {
   authService?: AuthService;
@@ -25,6 +40,14 @@ export interface AppDependencies {
   projectController?: ProjectController;
   apiKeyService?: ApiKeyService;
   apiKeyController?: ApiKeyController;
+  shardService?: ShardService;
+  shardController?: ShardController;
+  routingService?: RoutingService;
+  routingController?: RoutingController;
+  tenantMappingController?: TenantMappingController;
+  dataPlaneService?: DataPlaneService;
+  dataPlaneController?: DataPlaneController;
+  dataPlaneAuthOptions?: DataPlaneAuthOptions;
 }
 
 /**
@@ -79,9 +102,32 @@ export async function buildApp(
   const apiKeyController =
     dependencies.apiKeyController ?? new ApiKeyController(apiKeyService);
 
+  const shardService =
+    dependencies.shardService ??
+    new ShardService(new ShardRepository(), projectService);
+  const shardController =
+    dependencies.shardController ?? new ShardController(shardService);
+
+  const routingService =
+    dependencies.routingService ?? new RoutingService(undefined, undefined, undefined, projectService);
+  const routingController =
+    dependencies.routingController ?? new RoutingController(routingService);
+  const tenantMappingController =
+    dependencies.tenantMappingController ?? new TenantMappingController(routingService);
+
   registerMeRoutes(app, authService);
   registerProjectRoutes(app, authService, projectController);
   registerApiKeyRoutes(app, authService, apiKeyController);
+  registerShardRoutes(app, authService, shardController);
+  registerRoutingRoutes(app, authService, routingController);
+  registerTenantMappingRoutes(app, authService, tenantMappingController);
+
+  const dataPlaneService =
+    dependencies.dataPlaneService ?? new DataPlaneService();
+  const dataPlaneController =
+    dependencies.dataPlaneController ?? new DataPlaneController(dataPlaneService);
+
+  registerDataPlaneRoutes(app, dataPlaneController, dependencies.dataPlaneAuthOptions);
 
   return app;
 }

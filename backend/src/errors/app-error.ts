@@ -131,6 +131,8 @@ export class BadGatewayError extends AppError {
   }
 }
 
+export class DatabaseError extends BadGatewayError {}
+
 /**
  * 503 Service Unavailable
  */

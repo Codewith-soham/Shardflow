@@ -194,7 +194,7 @@ The API key can authenticate requests to the appropriate project.
 
 # 8. Phase 3 — Shard Management
 
-**Status:** `PLANNED`
+**Status:** `COMPLETED`
 
 ### Objective
 
@@ -202,15 +202,15 @@ Allow project administrators to register and manage database shards.
 
 ### Tasks
 
-* [ ] 3.1 Shard model
-* [ ] 3.2 Shard repository
-* [ ] 3.3 Connection manager
-* [ ] 3.4 Shard registration
-* [ ] 3.5 Shard retrieval
-* [ ] 3.6 Shard update
-* [ ] 3.7 Shard lifecycle management
-* [ ] 3.8 Initial connection validation
-* [ ] 3.9 Shard management tests
+* [x] 3.1 Shard model (status/health enums, AES-256-GCM credential encryption, Zod schemas)
+* [x] 3.2 Shard repository (CRUD, health update, active-shard query)
+* [x] 3.3 Connection manager (per-shard MongoDB connection pooling, lazy creation, isolated failure domains)
+* [x] 3.4 Shard registration (`POST /api/v1/projects/:projectId/shards`)
+* [x] 3.5 Shard retrieval (`GET /api/v1/projects/:projectId/shards`, `GET .../shards/:shardId`)
+* [x] 3.6 Shard update (`PATCH /api/v1/projects/:projectId/shards/:shardId`)
+* [x] 3.7 Shard lifecycle management (`DELETE /api/v1/projects/:projectId/shards/:shardId`)
+* [x] 3.8 Initial connection validation (ping on registration — marks HEALTHY or UNHEALTHY)
+* [x] 3.9 Shard management tests (14 tests — auth, CRUD, credential security, health simulation)
 
 ### Exit Criteria
 
@@ -232,7 +232,7 @@ Shard credentials must be handled securely.
 
 # 9. Phase 4 — Data Plane Core
 
-**Status:** `PLANNED`
+**Status:** `COMPLETED`
 
 ### Objective
 
@@ -240,15 +240,15 @@ Implement the core request-processing path used by customer applications.
 
 ### Tasks
 
-* [ ] 4.1 Data-plane API foundation
-* [ ] 4.2 API-key authentication
-* [ ] 4.3 Project resolution
-* [ ] 4.4 Request validation
-* [ ] 4.5 Operation representation
-* [ ] 4.6 Database operation abstraction
-* [ ] 4.7 Database executor
-* [ ] 4.8 Response handling
-* [ ] 4.9 Data-plane tests
+* [x] 4.1 Data-plane API foundation
+* [x] 4.2 API-key authentication
+* [x] 4.3 Project resolution
+* [x] 4.4 Request validation
+* [x] 4.5 Operation representation
+* [x] 4.6 Database operation abstraction
+* [x] 4.7 Database executor
+* [x] 4.8 Response handling
+* [x] 4.9 Data-plane tests
 
 ### Exit Criteria
 
@@ -276,7 +276,7 @@ Routing intelligence will be added in the following phase.
 
 # 10. Phase 5 — Routing & Metadata
 
-**Status:** `PLANNED`
+**Status:** `COMPLETED`
 
 ### Objective
 
@@ -284,15 +284,15 @@ Implement ShardFlow's core data-routing mechanism.
 
 ### Tasks
 
-* [ ] 5.1 Routing abstraction
-* [ ] 5.2 Shard selection
-* [ ] 5.3 Metadata model
-* [ ] 5.4 Metadata repository
-* [ ] 5.5 Write routing
-* [ ] 5.6 Read routing
-* [ ] 5.7 Metadata consistency handling
-* [ ] 5.8 Routing edge cases
-* [ ] 5.9 Routing tests
+* [x] 5.1 Routing abstraction
+* [x] 5.2 Shard selection
+* [x] 5.3 Metadata model
+* [x] 5.4 Metadata repository
+* [x] 5.5 Write routing
+* [x] 5.6 Read routing
+* [x] 5.7 Metadata consistency handling
+* [x] 5.8 Routing edge cases
+* [x] 5.9 Routing tests
 
 ### Exit Criteria
 
@@ -495,11 +495,15 @@ A phase should not be marked complete merely because the code compiles.
 ## Completed Phases
 * [x] Phase 0 — Project Foundation
 * [x] Phase 1 — Control Plane Foundation
+* [x] Phase 2 — Authentication & Project Management
+* [x] Phase 3 — Shard Management
+* [x] Phase 4 — Data Plane Core
+* [x] Phase 5 — Routing & Metadata
 
 ## Current Phase
 
-**Phase 2 — Authentication & Project Management**
+**Phase 6 — Health Monitoring & Failure Handling**
 
-**Current Task:** 2.8 API key generation
+**Current Task:** 6.1 Health-check abstraction
 
-**Status:** `IN_PROGRESS`
+**Status:** `PLANNED`

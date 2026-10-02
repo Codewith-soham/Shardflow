@@ -1,3 +1,4 @@
 export * from './user.repository.js';
 export * from './project.repository.js';
 export * from './api-key.repository.js';
+export * from './shard.repository.js';

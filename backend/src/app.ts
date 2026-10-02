@@ -10,13 +10,17 @@ import {
   UserRepository,
   ProjectRepository,
   ApiKeyRepository,
+  ShardRepository,
   ProjectService,
   ApiKeyService,
+  ShardService,
   ProjectController,
   ApiKeyController,
+  ShardController,
   registerMeRoutes,
   registerProjectRoutes,
   registerApiKeyRoutes,
+  registerShardRoutes,
 } from './control-plane/index.js';
 
 export interface AppDependencies {
@@ -25,6 +29,8 @@ export interface AppDependencies {
   projectController?: ProjectController;
   apiKeyService?: ApiKeyService;
   apiKeyController?: ApiKeyController;
+  shardService?: ShardService;
+  shardController?: ShardController;
 }
 
 /**
@@ -79,9 +85,16 @@ export async function buildApp(
   const apiKeyController =
     dependencies.apiKeyController ?? new ApiKeyController(apiKeyService);
 
+  const shardService =
+    dependencies.shardService ??
+    new ShardService(new ShardRepository(), projectService);
+  const shardController =
+    dependencies.shardController ?? new ShardController(shardService);
+
   registerMeRoutes(app, authService);
   registerProjectRoutes(app, authService, projectController);
   registerApiKeyRoutes(app, authService, apiKeyController);
+  registerShardRoutes(app, authService, shardController);
 
   return app;
 }

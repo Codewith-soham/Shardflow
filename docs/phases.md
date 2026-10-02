@@ -276,7 +276,7 @@ Routing intelligence will be added in the following phase.
 
 # 10. Phase 5 — Routing & Metadata
 
-**Status:** `PLANNED`
+**Status:** `COMPLETED`
 
 ### Objective
 
@@ -284,15 +284,15 @@ Implement ShardFlow's core data-routing mechanism.
 
 ### Tasks
 
-* [ ] 5.1 Routing abstraction
-* [ ] 5.2 Shard selection
-* [ ] 5.3 Metadata model
-* [ ] 5.4 Metadata repository
-* [ ] 5.5 Write routing
-* [ ] 5.6 Read routing
-* [ ] 5.7 Metadata consistency handling
-* [ ] 5.8 Routing edge cases
-* [ ] 5.9 Routing tests
+* [x] 5.1 Routing abstraction
+* [x] 5.2 Shard selection
+* [x] 5.3 Metadata model
+* [x] 5.4 Metadata repository
+* [x] 5.5 Write routing
+* [x] 5.6 Read routing
+* [x] 5.7 Metadata consistency handling
+* [x] 5.8 Routing edge cases
+* [x] 5.9 Routing tests
 
 ### Exit Criteria
 
@@ -498,11 +498,12 @@ A phase should not be marked complete merely because the code compiles.
 * [x] Phase 2 — Authentication & Project Management
 * [x] Phase 3 — Shard Management
 * [x] Phase 4 — Data Plane Core
+* [x] Phase 5 — Routing & Metadata
 
 ## Current Phase
 
-**Phase 5 — Routing & Metadata**
+**Phase 6 — Health Monitoring & Failure Handling**
 
-**Current Task:** 5.1 Routing abstraction
+**Current Task:** 6.1 Health-check abstraction
 
 **Status:** `PLANNED`

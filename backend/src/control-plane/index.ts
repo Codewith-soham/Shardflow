@@ -4,25 +4,18 @@ import { ProjectRepository } from './repositories/project.repository.js';
 import { ApiKeyRepository } from './repositories/api-key.repository.js';
 import { ShardRepository } from './repositories/shard.repository.js';
 import { TenantMappingRepository } from './repositories/tenant-mapping.repository.js';
+import { RoutingConfigRepository } from './repositories/routing-config.repository.js';
 
 // ShardFlow — Control Plane module
 export * from './models/index.js';
 export * from './repositories/index.js';
-export * from './services/project.service.js';
-export * from './services/api-key.service.js';
-export * from './services/shard.service.js';
-export * from './controllers/user.controller.js';
-export * from './controllers/project.controller.js';
-export * from './controllers/api-key.controller.js';
-export * from './controllers/shard.controller.js';
-export * from './routes/me.routes.js';
-export * from './routes/project.routes.js';
-export * from './routes/api-key.routes.js';
-export * from './routes/shard.routes.js';
+export * from './services/index.js';
+export * from './controllers/index.js';
+export * from './routes/index.js';
 
 /**
  * Ensures required indexes across all control-plane collections
- * (users, projects, apiKeys, shards, tenantShardMappings) as defined in docs/database_design.md.
+ * (users, projects, apiKeys, shards, tenantShardMappings, routingConfigs) as defined in docs/database_design.md.
  */
 export async function initControlPlaneIndexes(db?: Db): Promise<void> {
   const userRepo = new UserRepository(db);
@@ -30,6 +23,7 @@ export async function initControlPlaneIndexes(db?: Db): Promise<void> {
   const apiKeyRepo = new ApiKeyRepository(db);
   const shardRepo = new ShardRepository(db);
   const tenantMappingRepo = new TenantMappingRepository(db);
+  const routingConfigRepo = new RoutingConfigRepository(db);
 
   await Promise.all([
     userRepo.ensureIndexes(),
@@ -37,6 +31,7 @@ export async function initControlPlaneIndexes(db?: Db): Promise<void> {
     apiKeyRepo.ensureIndexes(),
     shardRepo.ensureIndexes(),
     tenantMappingRepo.ensureIndexes(),
+    routingConfigRepo.ensureIndexes(),
   ]);
 }
 

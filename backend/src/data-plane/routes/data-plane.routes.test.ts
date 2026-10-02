@@ -381,9 +381,15 @@ describe('Data Plane Core — Phase 4', () => {
 
     it('returns 404 when tenant has no active shard mapping', async () => {
       const { DataPlaneService } = await import('../services/data-plane.service.js');
-      const service = new DataPlaneService(
+      const { RoutingEngine } = await import('../services/routing-engine.js');
+
+      const routingEngine = new RoutingEngine(
         mocks.mockTenantMappingRepo as any,
         mocks.mockShardRepo as any,
+        { findByProjectId: async () => null } as any
+      );
+      const service = new DataPlaneService(
+        routingEngine,
         { execute: async () => ({ documents: [] }) } as any
       );
 
@@ -404,9 +410,15 @@ describe('Data Plane Core — Phase 4', () => {
       };
 
       const { DataPlaneService } = await import('../services/data-plane.service.js');
-      const service = new DataPlaneService(
+      const { RoutingEngine } = await import('../services/routing-engine.js');
+
+      const routingEngine = new RoutingEngine(
         mocks.mockTenantMappingRepo as any,
         mocks.mockShardRepo as any,
+        { findByProjectId: async () => null } as any
+      );
+      const service = new DataPlaneService(
+        routingEngine,
         mockDatabaseExecutor as any
       );
 

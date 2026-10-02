@@ -17,10 +17,15 @@ import {
   ProjectController,
   ApiKeyController,
   ShardController,
+  RoutingService,
+  RoutingController,
+  TenantMappingController,
   registerMeRoutes,
   registerProjectRoutes,
   registerApiKeyRoutes,
   registerShardRoutes,
+  registerRoutingRoutes,
+  registerTenantMappingRoutes,
 } from './control-plane/index.js';
 import {
   DataPlaneService,
@@ -37,6 +42,9 @@ export interface AppDependencies {
   apiKeyController?: ApiKeyController;
   shardService?: ShardService;
   shardController?: ShardController;
+  routingService?: RoutingService;
+  routingController?: RoutingController;
+  tenantMappingController?: TenantMappingController;
   dataPlaneService?: DataPlaneService;
   dataPlaneController?: DataPlaneController;
   dataPlaneAuthOptions?: DataPlaneAuthOptions;
@@ -100,10 +108,19 @@ export async function buildApp(
   const shardController =
     dependencies.shardController ?? new ShardController(shardService);
 
+  const routingService =
+    dependencies.routingService ?? new RoutingService(undefined, undefined, undefined, projectService);
+  const routingController =
+    dependencies.routingController ?? new RoutingController(routingService);
+  const tenantMappingController =
+    dependencies.tenantMappingController ?? new TenantMappingController(routingService);
+
   registerMeRoutes(app, authService);
   registerProjectRoutes(app, authService, projectController);
   registerApiKeyRoutes(app, authService, apiKeyController);
   registerShardRoutes(app, authService, shardController);
+  registerRoutingRoutes(app, authService, routingController);
+  registerTenantMappingRoutes(app, authService, tenantMappingController);
 
   const dataPlaneService =
     dependencies.dataPlaneService ?? new DataPlaneService();

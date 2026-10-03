@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #050807;
+    color: #F4F4F5;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Focus ring style for interactive components */
+  *:focus-visible {
+    outline: 2px solid #10B981;
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Dynamic glowing light effects - Obsidian & Emerald/Teal Theme */
+  .glow-emerald {
+    box-shadow: 0 0 25px -3px rgba(16, 185, 129, 0.4), 0 0 10px -2px rgba(52, 211, 153, 0.3);
+  }
+
+  .glow-teal {
+    box-shadow: 0 0 25px -3px rgba(20, 184, 166, 0.4), 0 0 10px -2px rgba(45, 212, 191, 0.3);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 25px -3px rgba(6, 182, 212, 0.35), 0 0 10px -2px rgba(34, 211, 238, 0.25);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px -3px rgba(16, 185, 129, 0.3);
+  }
+
+  .glow-healthy {
+    box-shadow: 0 0 15px -2px rgba(52, 211, 153, 0.3);
+  }
+
+  .glow-error {
+    box-shadow: 0 0 15px -2px rgba(248, 113, 113, 0.3);
+  }
+
+  /* Technical Grid Mesh */
+  .bg-grid-mesh {
+    background-image: 
+      linear-gradient(to right, rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .bg-radial-gradient {
+    background: radial-gradient(circle at 50% 30%, rgba(6, 78, 59, 0.2) 0%, rgba(6, 20, 16, 0.5) 50%, rgba(5, 8, 7, 1) 100%);
+  }
+}
+
+/* Keyframes for animated light streams along paths */
+@keyframes flowDash {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-flow-cable {
+  stroke-dasharray: 8 6;
+  animation: flowDash 3s linear infinite;
+}
+
+.animate-flow-cable-fast {
+  stroke-dasharray: 6 4;
+  animation: flowDash 1.8s linear infinite;
+}
+
+/* Custom scrollbar styling for technical UI */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050807;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #132A22;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1F4236;
+}

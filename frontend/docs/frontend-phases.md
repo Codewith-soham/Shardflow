@@ -264,28 +264,28 @@ F0
 
 ## Task F1.1 — Initialize Frontend Application
 
-Status: [ ]
+Status: [x]
 
-* [ ] Initialize React application
-* [ ] Configure Vite
-* [ ] Configure TypeScript
-* [ ] Configure Tailwind CSS
-* [ ] Configure project scripts
-* [ ] Verify development server
-* [ ] Verify production build
+* [x] Initialize React application
+* [x] Configure Vite
+* [x] Configure TypeScript
+* [x] Configure Tailwind CSS
+* [x] Configure project scripts
+* [x] Verify development server
+* [x] Verify production build
 
 ### Acceptance Criteria
 
-* [ ] Application starts successfully
-* [ ] TypeScript works
-* [ ] Tailwind works
-* [ ] Production build succeeds
+* [x] Application starts successfully
+* [x] TypeScript works
+* [x] Tailwind works
+* [x] Production build succeeds
 
 ---
 
 ## Task F1.2 — Create Frontend Folder Structure
 
-Status: [ ]
+Status: [x]
 
 Create:
 
@@ -320,40 +320,40 @@ src/
 └── main.tsx
 ```
 
-* [ ] Create directories
-* [ ] Remove unnecessary starter files
-* [ ] Establish naming conventions
+* [x] Create directories
+* [x] Remove unnecessary starter files
+* [x] Establish naming conventions
 
 ---
 
 ## Task F1.3 — Configure Environment Variables
 
-Status: [ ]
+Status: [x]
 
-* [ ] Configure frontend environment variables
-* [ ] Configure backend API URL
-* [ ] Configure Supabase URL
-* [ ] Configure Supabase public key
-* [ ] Create environment example file
-* [ ] Verify secrets are not committed
+* [x] Configure frontend environment variables
+* [x] Configure backend API URL
+* [x] Configure Supabase URL
+* [x] Configure Supabase public key
+* [x] Create environment example file
+* [x] Verify secrets are not committed
 
 ### Acceptance Criteria
 
-* [ ] Frontend reads configuration correctly
-* [ ] No secret/service-role key exists in frontend
-* [ ] `.env` is ignored
+* [x] Frontend reads configuration correctly
+* [x] No secret/service-role key exists in frontend
+* [x] `.env` is ignored
 
 ---
 
 ## Task F1.4 — Configure Application Providers
 
-Status: [ ]
+Status: [x]
 
-* [ ] Configure router
-* [ ] Configure TanStack Query
-* [ ] Configure Supabase client
-* [ ] Configure global application providers
-* [ ] Verify application boot
+* [x] Configure router
+* [x] Configure TanStack Query
+* [x] Configure Supabase client
+* [x] Configure global application providers
+* [x] Verify application boot
 
 ---
 
@@ -373,20 +373,20 @@ F1
 
 ## Task F2.1 — Implement Design Tokens
 
-Status: [ ]
+Status: [x]
 
 Implement:
 
-* [ ] Background colors
-* [ ] Surface colors
-* [ ] Border colors
-* [ ] Text colors
-* [ ] Accent colors
-* [ ] Health colors
-* [ ] Spacing scale
-* [ ] Border radius
-* [ ] Shadows
-* [ ] Typography
+* [x] Background colors (`#09090B`, `#111113`, `#18181B`, `#1E1E22`)
+* [x] Surface colors
+* [x] Border colors (`#27272A`, `#3F3F46`)
+* [x] Text colors (`#F4F4F5`, `#A1A1AA`, `#71717A`)
+* [x] Accent colors (`#38BDF8`)
+* [x] Health colors (`#34D399`, `#FBBF24`, `#F87171`, `#71717A`)
+* [x] Spacing scale
+* [x] Border radius
+* [x] Shadows & Glows
+* [x] Typography
 
 Primary visual direction:
 
@@ -402,65 +402,65 @@ Professional
 
 ## Task F2.2 — Configure Typography
 
-Status: [ ]
+Status: [x]
 
-* [ ] Configure primary UI font
-* [ ] Configure technical/monospace font
-* [ ] Define heading hierarchy
-* [ ] Define body text
-* [ ] Define labels
-* [ ] Define metadata
-* [ ] Define code text
+* [x] Configure primary UI font (Inter)
+* [x] Configure technical/monospace font (JetBrains Mono)
+* [x] Define heading hierarchy
+* [x] Define body text
+* [x] Define labels
+* [x] Define metadata
+* [x] Define code text
 
 ---
 
 ## Task F2.3 — Build Base UI Components
 
-Status: [ ]
+Status: [x]
 
-* [ ] Button
-* [ ] Input
-* [ ] Select
-* [ ] Textarea
-* [ ] Checkbox
-* [ ] Badge
-* [ ] Card
-* [ ] Dialog
-* [ ] Tooltip
-* [ ] Dropdown
-* [ ] Tabs
-* [ ] Table
-* [ ] Skeleton
-* [ ] Alert
+* [x] Button (`Button.tsx`)
+* [x] Input (`Input.tsx`)
+* [x] Select (`Select.tsx`)
+* [x] Textarea (`Textarea.tsx`)
+* [x] Checkbox (`Checkbox.tsx`)
+* [x] Badge (`Badge.tsx`)
+* [x] Card (`Card.tsx`)
+* [x] Dialog (`Dialog.tsx`)
+* [x] Tooltip (`Tooltip.tsx`)
+* [x] Dropdown (`Dropdown.tsx`)
+* [x] Tabs (`Tabs.tsx`)
+* [x] Table (`Table.tsx`)
+* [x] Skeleton (`Skeleton.tsx`)
+* [x] Alert (`Alert.tsx`)
 
 ---
 
 ## Task F2.4 — Build Infrastructure Components
 
-Status: [ ]
+Status: [x]
 
-* [ ] StatusBadge
-* [ ] HealthBadge
-* [ ] MetricCard
-* [ ] ConnectionStatus
-* [ ] ShardCard
-* [ ] HealthIndicator
-* [ ] TenantMappingRow
-* [ ] ApiKeyRow
-* [ ] ActivityItem
+* [x] StatusBadge (`StatusBadge.tsx`)
+* [x] HealthBadge (`HealthBadge.tsx`)
+* [x] MetricCard (`MetricCard.tsx`)
+* [x] ConnectionStatus (`ConnectionStatus.tsx`)
+* [x] ShardCard (`ShardCard.tsx`)
+* [x] HealthIndicator (`HealthIndicator.tsx`)
+* [x] TenantMappingRow (`TenantMappingRow.tsx`)
+* [x] ApiKeyRow (`ApiKeyRow.tsx`)
+* [x] ActivityItem (`ActivityItem.tsx`)
 
 ---
 
 ## Task F2.5 — Build Feedback Components
 
-Status: [ ]
+Status: [x]
 
-* [ ] Loading state
-* [ ] Empty state
-* [ ] Error state
-* [ ] Success feedback
-* [ ] Confirmation dialog
-* [ ] Toast/notification system
+* [x] Loading state (`LoadingState.tsx`)
+* [x] Empty state (`EmptyState.tsx`)
+* [x] Error state (`ErrorState.tsx`)
+* [x] Success feedback
+* [x] Confirmation dialog (`ConfirmationDialog.tsx`)
+* [x] Toast/notification system (`Toast.tsx`)
 
 ### Gate
 
@@ -484,34 +484,34 @@ F2
 
 ## Task F3.1 — Build Navbar
 
-Status: [ ]
+Status: [x]
 
-* [ ] ShardFlow branding
-* [ ] Navigation
-* [ ] Documentation link
-* [ ] Sign in
-* [ ] Get started CTA
-* [ ] Responsive navigation
+* [x] ShardFlow branding
+* [x] Navigation
+* [x] Documentation link
+* [x] Sign in
+* [x] Get started CTA
+* [x] Responsive navigation drawer
 
 ---
 
 ## Task F3.2 — Build Hero
 
-Status: [ ]
+Status: [x]
 
-* [ ] Hero headline
-* [ ] Supporting copy
-* [ ] Primary CTA
-* [ ] Secondary CTA
-* [ ] Infrastructure visualization
-* [ ] Application → ShardFlow → database flow
-* [ ] Responsive layout
+* [x] Hero headline
+* [x] Supporting copy
+* [x] Primary CTA
+* [x] Secondary CTA
+* [x] Infrastructure visualization integration
+* [x] Application → ShardFlow → database flow
+* [x] Responsive layout
 
 ---
 
 ## Task F3.3 — Build Infrastructure Visualization
 
-Status: [ ]
+Status: [x]
 
 Visual concept:
 
@@ -531,31 +531,31 @@ Application
 DB01  DB02  DB03
 ```
 
-* [ ] Database nodes
-* [ ] Routing paths
-* [ ] Health indicators
-* [ ] Subtle data flow
-* [ ] Responsive behavior
-* [ ] No fake metrics
+* [x] Database nodes
+* [x] Routing paths
+* [x] Health indicators
+* [x] Subtle data flow (interactive request routing preview)
+* [x] Responsive behavior
+* [x] No fake metrics
 
 ---
 
 ## Task F3.4 — Build Problem Section
 
-Status: [ ]
+Status: [x]
 
 Explain:
 
-* [ ] Database scaling complexity
-* [ ] Shard management complexity
-* [ ] Application-level routing complexity
-* [ ] Operational visibility
+* [x] Database scaling complexity
+* [x] Shard management complexity
+* [x] Application-level routing complexity
+* [x] Operational visibility
 
 ---
 
 ## Task F3.5 — Build How It Works Section
 
-Status: [ ]
+Status: [x]
 
 Show:
 
@@ -575,7 +575,7 @@ MongoDB Shard
 
 ## Task F3.6 — Build Routing Section
 
-Status: [ ]
+Status: [x]
 
 Show examples:
 
@@ -591,19 +591,19 @@ Do not imply automatic rebalancing or unsupported load balancing.
 
 ## Task F3.7 — Build Shard Management Section
 
-Status: [ ]
+Status: [x]
 
-* [ ] Shard cards
-* [ ] Admin status
-* [ ] Health status
-* [ ] Database type
-* [ ] Connection representation
+* [x] Shard cards
+* [x] Admin status
+* [x] Health status
+* [x] Database type
+* [x] Connection representation
 
 ---
 
 ## Task F3.8 — Build Health Section
 
-Status: [ ]
+Status: [x]
 
 Show:
 
@@ -620,7 +620,7 @@ Explain health monitoring without implying V1 automatic failover.
 
 ## Task F3.9 — Build Developer Integration Section
 
-Status: [ ]
+Status: [x]
 
 Show:
 
@@ -640,7 +640,7 @@ MongoDB shard
 
 ## Task F3.10 — Build Architecture Section
 
-Status: [ ]
+Status: [x]
 
 Show:
 
@@ -662,21 +662,21 @@ Clearly distinguish control plane and data plane.
 
 ## Task F3.11 — Build CTA and Footer
 
-Status: [ ]
+Status: [x]
 
-* [ ] Final CTA
-* [ ] Documentation
-* [ ] Product navigation
-* [ ] Authentication links
-* [ ] Footer information
+* [x] Final CTA
+* [x] Documentation
+* [x] Product navigation
+* [x] Authentication links
+* [x] Footer information
 
 ### Gate
 
-* [ ] Entire landing page works
-* [ ] Mobile responsive
-* [ ] No placeholder content
-* [ ] No fake metrics
-* [ ] Visual hierarchy is consistent
+* [x] Entire landing page works
+* [x] Mobile responsive
+* [x] No placeholder content
+* [x] No fake metrics
+* [x] Visual hierarchy is consistent
 
 ---
 

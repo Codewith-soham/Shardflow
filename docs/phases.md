@@ -302,7 +302,7 @@ ShardFlow can determine where data should be written and subsequently locate tha
 
 # 11. Phase 6 — Health Monitoring & Failure Handling
 
-**Status:** `PLANNED`
+**Status:** `COMPLETED`
 
 ### Objective
 
@@ -310,14 +310,14 @@ Monitor registered shards and handle basic shard availability failures.
 
 ### Tasks
 
-* [ ] 6.1 Health-check abstraction
-* [ ] 6.2 Shard health checker
-* [ ] 6.3 Health state management
-* [ ] 6.4 Failure detection
-* [ ] 6.5 Recovery detection
-* [ ] 6.6 Routing interaction with unhealthy shards
-* [ ] 6.7 Notification mechanism
-* [ ] 6.8 Health monitoring tests
+* [x] 6.1 Health-check abstraction
+* [x] 6.2 Shard health checker
+* [x] 6.3 Health state management
+* [x] 6.4 Failure detection
+* [x] 6.5 Recovery detection
+* [x] 6.6 Routing interaction with unhealthy shards
+* [x] 6.7 Notification mechanism
+* [x] 6.8 Health monitoring tests
 
 ### Exit Criteria
 

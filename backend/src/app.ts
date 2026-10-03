@@ -33,6 +33,11 @@ import {
   type DataPlaneAuthOptions,
   registerDataPlaneRoutes,
 } from './data-plane/index.js';
+import {
+  HealthService,
+  HealthController,
+  registerHealthRoutes,
+} from './health/index.js';
 
 export interface AppDependencies {
   authService?: AuthService;
@@ -45,6 +50,8 @@ export interface AppDependencies {
   routingService?: RoutingService;
   routingController?: RoutingController;
   tenantMappingController?: TenantMappingController;
+  healthService?: HealthService;
+  healthController?: HealthController;
   dataPlaneService?: DataPlaneService;
   dataPlaneController?: DataPlaneController;
   dataPlaneAuthOptions?: DataPlaneAuthOptions;
@@ -115,12 +122,18 @@ export async function buildApp(
   const tenantMappingController =
     dependencies.tenantMappingController ?? new TenantMappingController(routingService);
 
+  const healthService =
+    dependencies.healthService ?? new HealthService(new ShardRepository(), undefined, new ProjectRepository(), new UserRepository());
+  const healthController =
+    dependencies.healthController ?? new HealthController(healthService);
+
   registerMeRoutes(app, authService);
   registerProjectRoutes(app, authService, projectController);
   registerApiKeyRoutes(app, authService, apiKeyController);
   registerShardRoutes(app, authService, shardController);
   registerRoutingRoutes(app, authService, routingController);
   registerTenantMappingRoutes(app, authService, tenantMappingController);
+  registerHealthRoutes(app, authService, healthController);
 
   const dataPlaneService =
     dependencies.dataPlaneService ?? new DataPlaneService();

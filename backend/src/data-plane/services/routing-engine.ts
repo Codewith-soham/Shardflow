@@ -7,6 +7,7 @@ import {
   ShardRepository,
   RoutingConfigRepository,
   ShardStatus,
+  ShardHealthStatus,
   type Shard,
 } from '../../control-plane/index.js';
 
@@ -31,7 +32,7 @@ export class RoutingEngine {
    * Flow (docs/architecture.md §14):
    * 1. Retrieve project routing configuration (defaults to TENANT_BASED)
    * 2. Query tenant-to-shard mapping
-   * 3. Fetch shard metadata and verify active operational status
+   * 3. Fetch shard metadata and verify active operational status and health state
    */
   async resolveShard(projectId: string | ObjectId, tenantId: string): Promise<Shard> {
     // 1. Verify routing strategy configuration
@@ -73,6 +74,13 @@ export class RoutingEngine {
       throw new ServiceUnavailableError(
         `Mapped shard "${shard.name}" is currently disabled`,
         ErrorCode.SHARD_UNAVAILABLE
+      );
+    }
+
+    if (shard.healthStatus === ShardHealthStatus.UNHEALTHY) {
+      throw new ServiceUnavailableError(
+        `Mapped shard "${shard.name}" is currently unhealthy`,
+        ErrorCode.MAPPED_SHARD_UNAVAILABLE
       );
     }
 

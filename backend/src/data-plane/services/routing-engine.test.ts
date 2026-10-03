@@ -113,6 +113,21 @@ describe('RoutingEngine (Tasks 5.1, 5.2, 5.5, 5.6, 5.8)', () => {
     );
   });
 
+  it('throws MAPPED_SHARD_UNAVAILABLE when mapped shard is unhealthy (Task 6.6)', async () => {
+    const unhealthyShard = { ...shard, healthStatus: ShardHealthStatus.UNHEALTHY };
+    mockShardRepo.findByIdAndProjectId = async () => unhealthyShard;
+
+    const engine = new RoutingEngine(
+      mockTenantMappingRepo,
+      mockShardRepo,
+      mockRoutingConfigRepo
+    );
+
+    await expect(engine.resolveShard(projectId, tenantId)).rejects.toThrow(
+      /is currently unhealthy/i
+    );
+  });
+
   it('throws ROUTING_STRATEGY_NOT_SUPPORTED when routing config strategy is invalid', async () => {
     const invalidConfig = { ...routingConfig, strategy: 'INVALID_STRATEGY' as any };
     mockRoutingConfigRepo.findByProjectId = async () => invalidConfig;

@@ -10,7 +10,9 @@
     "skipLibCheck": true, //dont check the declaration file of installed libraries
     "forceConsistentCasingInFileNames": true, //prevents problems caused by different capitalization of filenames/import
     "resolveJsonModule": true, //allows ts to import json files as modules 
-    "sourceMap": true, //
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noFallthroughCasesInSwitch": true, //prevents accidental switch-case falthrough

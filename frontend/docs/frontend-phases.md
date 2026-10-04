@@ -871,47 +871,47 @@ F5
 
 ## Task F6.1 — Project List
 
-Status: [ ]
+Status: [x]
 
-* [ ] Fetch projects
-* [ ] Display projects
-* [ ] Loading state
-* [ ] Empty state
-* [ ] Error state
+* [x] Fetch projects
+* [x] Display projects
+* [x] Loading state
+* [x] Empty state
+* [x] Error state
 
 ---
 
 ## Task F6.2 — Create Project
 
-Status: [ ]
+Status: [x]
 
-* [ ] Create project dialog/page
-* [ ] Form validation
-* [ ] API integration
-* [ ] Success handling
-* [ ] Error handling
+* [x] Create project dialog/page
+* [x] Form validation
+* [x] API integration
+* [x] Success handling
+* [x] Error handling
 
 ---
 
 ## Task F6.3 — Project Selection
 
-Status: [ ]
+Status: [x]
 
-* [ ] Project switcher
-* [ ] Persist selected project
-* [ ] Update project context
-* [ ] Reload project-specific data
+* [x] Project switcher
+* [x] Persist selected project
+* [x] Update project context
+* [x] Reload project-specific data
 
 ---
 
 ## Task F6.4 — Project Details
 
-Status: [ ]
+Status: [x]
 
-* [ ] Project information
-* [ ] Project identifier
-* [ ] Relevant metadata
-* [ ] Loading/error states
+* [x] Project information
+* [x] Project identifier
+* [x] Relevant metadata
+* [x] Loading/error states
 
 ---
 

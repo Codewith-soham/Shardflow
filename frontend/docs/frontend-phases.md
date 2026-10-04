@@ -184,63 +184,63 @@ Frontend Specification
 
 ## Task F0.1 — Review Frontend Contracts
 
-Status: [ ]
+Status: [x]
 
-* [ ] Read `prd.md`
-* [ ] Read `architecture.md`
-* [ ] Read `database-design.md`
-* [ ] Read `api.md`
-* [ ] Read `error-contract.md`
-* [ ] Read `rules.md`
-* [ ] Read `memory.md`
-* [ ] Read `frontend.md`
+* [x] Read `prd.md`
+* [x] Read `architecture.md`
+* [x] Read `database-design.md`
+* [x] Read `api.md`
+* [x] Read `error-contract.md`
+* [x] Read `rules.md`
+* [x] Read `memory.md`
+* [x] Read `frontend.md`
 
 ### Acceptance Criteria
 
-* [ ] Frontend understands authentication flow
-* [ ] Frontend understands project model
-* [ ] Frontend understands shard model
-* [ ] Frontend understands routing model
-* [ ] Frontend understands API key behavior
-* [ ] Frontend understands health states
-* [ ] Frontend understands activity events
-* [ ] Frontend understands integration requirements
+* [x] Frontend understands authentication flow
+* [x] Frontend understands project model
+* [x] Frontend understands shard model
+* [x] Frontend understands routing model
+* [x] Frontend understands API key behavior
+* [x] Frontend understands health states
+* [x] Frontend understands activity events
+* [x] Frontend understands integration requirements
 
 ---
 
 ## Task F0.2 — Identify Frontend API Dependencies
 
-Status: [ ]
+Status: [x]
 
-* [ ] List required control-plane endpoints
-* [ ] Map endpoints to frontend features
-* [ ] Identify required request payloads
-* [ ] Identify response structures
-* [ ] Identify error codes
-* [ ] Identify authentication requirements
-* [ ] Identify project-scoped resources
-* [ ] Identify unsupported operations
+* [x] List required control-plane endpoints
+* [x] Map endpoints to frontend features
+* [x] Identify required request payloads
+* [x] Identify response structures
+* [x] Identify error codes
+* [x] Identify authentication requirements
+* [x] Identify project-scoped resources
+* [x] Identify unsupported operations
 
 ### Acceptance Criteria
 
-* [ ] No frontend feature assumes an undocumented endpoint
-* [ ] Missing contracts are documented
-* [ ] Unsupported behavior is explicitly excluded
+* [x] No frontend feature assumes an undocumented endpoint
+* [x] Missing contracts are documented
+* [x] Unsupported behavior is explicitly excluded
 
 ---
 
 ## Task F0.3 — Freeze Frontend Scope
 
-Status: [ ]
+Status: [x]
 
-* [ ] Confirm V1 feature list
-* [ ] Confirm dashboard routes
-* [ ] Confirm authentication routes
-* [ ] Confirm design direction
-* [ ] Confirm responsive requirement
-* [ ] Confirm dark-only requirement
-* [ ] Confirm no GitHub login
-* [ ] Confirm no fake production metrics
+* [x] Confirm V1 feature list
+* [x] Confirm dashboard routes
+* [x] Confirm authentication routes
+* [x] Confirm design direction
+* [x] Confirm responsive requirement
+* [x] Confirm dark-only requirement
+* [x] Confirm no GitHub login
+* [x] Confirm no fake production metrics
 
 ### Gate
 
@@ -697,7 +697,7 @@ F3
 
 ## Task F4.1 — Configure Application Routes
 
-Status: [ ]
+Status: [x]
 
 ```text
 /app
@@ -717,19 +717,19 @@ Status: [ ]
 
 ## Task F4.2 — Build Dashboard Layout
 
-Status: [ ]
+Status: [x]
 
-* [ ] Sidebar
-* [ ] Topbar
-* [ ] Main content area
-* [ ] Responsive layout
-* [ ] Mobile navigation
+* [x] Sidebar
+* [x] Topbar
+* [x] Main content area
+* [x] Responsive layout
+* [x] Mobile navigation
 
 ---
 
 ## Task F4.3 — Build Sidebar Navigation
 
-Status: [ ]
+Status: [x]
 
 ```text
 Overview
@@ -756,24 +756,24 @@ Settings
 
 ## Task F4.4 — Build Topbar
 
-Status: [ ]
+Status: [x]
 
-* [ ] Project switcher
-* [ ] Notifications
-* [ ] User menu
-* [ ] Breadcrumb/page context where required
+* [x] Project switcher
+* [x] Notifications
+* [x] User menu
+* [x] Breadcrumb/page context where required
 
 ---
 
 ## Task F4.5 — Build Protected Route Foundation
 
-Status: [ ]
+Status: [x]
 
-* [ ] Detect authenticated session
-* [ ] Protect `/app/*`
-* [ ] Redirect unauthenticated users
-* [ ] Handle session loading
-* [ ] Handle expired session
+* [x] Detect authenticated session
+* [x] Protect `/app/*`
+* [x] Redirect unauthenticated users
+* [x] Handle session loading
+* [x] Handle expired session
 
 ---
 
@@ -793,61 +793,61 @@ F4
 
 ## Task F5.1 — Build Sign In
 
-Status: [ ]
+Status: [x]
 
-* [ ] Email input
-* [ ] Password input
-* [ ] Sign-in action
-* [ ] Loading state
-* [ ] Error state
-* [ ] Success redirect
+* [x] Email input
+* [x] Password input
+* [x] Sign-in action
+* [x] Loading state
+* [x] Error state
+* [x] Success redirect
 
 ---
 
 ## Task F5.2 — Build Sign Up
 
-Status: [ ]
+Status: [x]
 
-* [ ] Registration form
-* [ ] Validation
-* [ ] Supabase registration
-* [ ] Error handling
-* [ ] Success state
+* [x] Registration form
+* [x] Validation
+* [x] Supabase registration
+* [x] Error handling
+* [x] Success state
 
 ---
 
 ## Task F5.3 — Build Forgot Password
 
-Status: [ ]
+Status: [x]
 
-* [ ] Email input
-* [ ] Reset request
-* [ ] Success state
-* [ ] Error state
+* [x] Email input
+* [x] Reset request
+* [x] Success state
+* [x] Error state
 
 ---
 
 ## Task F5.4 — Build Reset Password
 
-Status: [ ]
+Status: [x]
 
-* [ ] Password input
-* [ ] Confirmation input
-* [ ] Password update
-* [ ] Success state
-* [ ] Error state
+* [x] Password input
+* [x] Confirmation input
+* [x] Password update
+* [x] Success state
+* [x] Error state
 
 ---
 
 ## Task F5.5 — Complete Authentication Flow
 
-Status: [ ]
+Status: [x]
 
-* [ ] Session persistence
-* [ ] Route protection
-* [ ] Logout
-* [ ] Auth loading state
-* [ ] Expired session handling
+* [x] Session persistence
+* [x] Route protection
+* [x] Logout
+* [x] Auth loading state
+* [x] Expired session handling
 
 ### Rule
 

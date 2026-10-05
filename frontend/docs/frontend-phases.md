@@ -184,63 +184,63 @@ Frontend Specification
 
 ## Task F0.1 — Review Frontend Contracts
 
-Status: [ ]
+Status: [x]
 
-* [ ] Read `prd.md`
-* [ ] Read `architecture.md`
-* [ ] Read `database-design.md`
-* [ ] Read `api.md`
-* [ ] Read `error-contract.md`
-* [ ] Read `rules.md`
-* [ ] Read `memory.md`
-* [ ] Read `frontend.md`
+* [x] Read `prd.md`
+* [x] Read `architecture.md`
+* [x] Read `database-design.md`
+* [x] Read `api.md`
+* [x] Read `error-contract.md`
+* [x] Read `rules.md`
+* [x] Read `memory.md`
+* [x] Read `frontend.md`
 
 ### Acceptance Criteria
 
-* [ ] Frontend understands authentication flow
-* [ ] Frontend understands project model
-* [ ] Frontend understands shard model
-* [ ] Frontend understands routing model
-* [ ] Frontend understands API key behavior
-* [ ] Frontend understands health states
-* [ ] Frontend understands activity events
-* [ ] Frontend understands integration requirements
+* [x] Frontend understands authentication flow
+* [x] Frontend understands project model
+* [x] Frontend understands shard model
+* [x] Frontend understands routing model
+* [x] Frontend understands API key behavior
+* [x] Frontend understands health states
+* [x] Frontend understands activity events
+* [x] Frontend understands integration requirements
 
 ---
 
 ## Task F0.2 — Identify Frontend API Dependencies
 
-Status: [ ]
+Status: [x]
 
-* [ ] List required control-plane endpoints
-* [ ] Map endpoints to frontend features
-* [ ] Identify required request payloads
-* [ ] Identify response structures
-* [ ] Identify error codes
-* [ ] Identify authentication requirements
-* [ ] Identify project-scoped resources
-* [ ] Identify unsupported operations
+* [x] List required control-plane endpoints
+* [x] Map endpoints to frontend features
+* [x] Identify required request payloads
+* [x] Identify response structures
+* [x] Identify error codes
+* [x] Identify authentication requirements
+* [x] Identify project-scoped resources
+* [x] Identify unsupported operations
 
 ### Acceptance Criteria
 
-* [ ] No frontend feature assumes an undocumented endpoint
-* [ ] Missing contracts are documented
-* [ ] Unsupported behavior is explicitly excluded
+* [x] No frontend feature assumes an undocumented endpoint
+* [x] Missing contracts are documented
+* [x] Unsupported behavior is explicitly excluded
 
 ---
 
 ## Task F0.3 — Freeze Frontend Scope
 
-Status: [ ]
+Status: [x]
 
-* [ ] Confirm V1 feature list
-* [ ] Confirm dashboard routes
-* [ ] Confirm authentication routes
-* [ ] Confirm design direction
-* [ ] Confirm responsive requirement
-* [ ] Confirm dark-only requirement
-* [ ] Confirm no GitHub login
-* [ ] Confirm no fake production metrics
+* [x] Confirm V1 feature list
+* [x] Confirm dashboard routes
+* [x] Confirm authentication routes
+* [x] Confirm design direction
+* [x] Confirm responsive requirement
+* [x] Confirm dark-only requirement
+* [x] Confirm no GitHub login
+* [x] Confirm no fake production metrics
 
 ### Gate
 
@@ -264,28 +264,28 @@ F0
 
 ## Task F1.1 — Initialize Frontend Application
 
-Status: [ ]
+Status: [x]
 
-* [ ] Initialize React application
-* [ ] Configure Vite
-* [ ] Configure TypeScript
-* [ ] Configure Tailwind CSS
-* [ ] Configure project scripts
-* [ ] Verify development server
-* [ ] Verify production build
+* [x] Initialize React application
+* [x] Configure Vite
+* [x] Configure TypeScript
+* [x] Configure Tailwind CSS
+* [x] Configure project scripts
+* [x] Verify development server
+* [x] Verify production build
 
 ### Acceptance Criteria
 
-* [ ] Application starts successfully
-* [ ] TypeScript works
-* [ ] Tailwind works
-* [ ] Production build succeeds
+* [x] Application starts successfully
+* [x] TypeScript works
+* [x] Tailwind works
+* [x] Production build succeeds
 
 ---
 
 ## Task F1.2 — Create Frontend Folder Structure
 
-Status: [ ]
+Status: [x]
 
 Create:
 
@@ -320,40 +320,40 @@ src/
 └── main.tsx
 ```
 
-* [ ] Create directories
-* [ ] Remove unnecessary starter files
-* [ ] Establish naming conventions
+* [x] Create directories
+* [x] Remove unnecessary starter files
+* [x] Establish naming conventions
 
 ---
 
 ## Task F1.3 — Configure Environment Variables
 
-Status: [ ]
+Status: [x]
 
-* [ ] Configure frontend environment variables
-* [ ] Configure backend API URL
-* [ ] Configure Supabase URL
-* [ ] Configure Supabase public key
-* [ ] Create environment example file
-* [ ] Verify secrets are not committed
+* [x] Configure frontend environment variables
+* [x] Configure backend API URL
+* [x] Configure Supabase URL
+* [x] Configure Supabase public key
+* [x] Create environment example file
+* [x] Verify secrets are not committed
 
 ### Acceptance Criteria
 
-* [ ] Frontend reads configuration correctly
-* [ ] No secret/service-role key exists in frontend
-* [ ] `.env` is ignored
+* [x] Frontend reads configuration correctly
+* [x] No secret/service-role key exists in frontend
+* [x] `.env` is ignored
 
 ---
 
 ## Task F1.4 — Configure Application Providers
 
-Status: [ ]
+Status: [x]
 
-* [ ] Configure router
-* [ ] Configure TanStack Query
-* [ ] Configure Supabase client
-* [ ] Configure global application providers
-* [ ] Verify application boot
+* [x] Configure router
+* [x] Configure TanStack Query
+* [x] Configure Supabase client
+* [x] Configure global application providers
+* [x] Verify application boot
 
 ---
 
@@ -373,20 +373,20 @@ F1
 
 ## Task F2.1 — Implement Design Tokens
 
-Status: [ ]
+Status: [x]
 
 Implement:
 
-* [ ] Background colors
-* [ ] Surface colors
-* [ ] Border colors
-* [ ] Text colors
-* [ ] Accent colors
-* [ ] Health colors
-* [ ] Spacing scale
-* [ ] Border radius
-* [ ] Shadows
-* [ ] Typography
+* [x] Background colors (`#09090B`, `#111113`, `#18181B`, `#1E1E22`)
+* [x] Surface colors
+* [x] Border colors (`#27272A`, `#3F3F46`)
+* [x] Text colors (`#F4F4F5`, `#A1A1AA`, `#71717A`)
+* [x] Accent colors (`#38BDF8`)
+* [x] Health colors (`#34D399`, `#FBBF24`, `#F87171`, `#71717A`)
+* [x] Spacing scale
+* [x] Border radius
+* [x] Shadows & Glows
+* [x] Typography
 
 Primary visual direction:
 
@@ -402,65 +402,65 @@ Professional
 
 ## Task F2.2 — Configure Typography
 
-Status: [ ]
+Status: [x]
 
-* [ ] Configure primary UI font
-* [ ] Configure technical/monospace font
-* [ ] Define heading hierarchy
-* [ ] Define body text
-* [ ] Define labels
-* [ ] Define metadata
-* [ ] Define code text
+* [x] Configure primary UI font (Inter)
+* [x] Configure technical/monospace font (JetBrains Mono)
+* [x] Define heading hierarchy
+* [x] Define body text
+* [x] Define labels
+* [x] Define metadata
+* [x] Define code text
 
 ---
 
 ## Task F2.3 — Build Base UI Components
 
-Status: [ ]
+Status: [x]
 
-* [ ] Button
-* [ ] Input
-* [ ] Select
-* [ ] Textarea
-* [ ] Checkbox
-* [ ] Badge
-* [ ] Card
-* [ ] Dialog
-* [ ] Tooltip
-* [ ] Dropdown
-* [ ] Tabs
-* [ ] Table
-* [ ] Skeleton
-* [ ] Alert
+* [x] Button (`Button.tsx`)
+* [x] Input (`Input.tsx`)
+* [x] Select (`Select.tsx`)
+* [x] Textarea (`Textarea.tsx`)
+* [x] Checkbox (`Checkbox.tsx`)
+* [x] Badge (`Badge.tsx`)
+* [x] Card (`Card.tsx`)
+* [x] Dialog (`Dialog.tsx`)
+* [x] Tooltip (`Tooltip.tsx`)
+* [x] Dropdown (`Dropdown.tsx`)
+* [x] Tabs (`Tabs.tsx`)
+* [x] Table (`Table.tsx`)
+* [x] Skeleton (`Skeleton.tsx`)
+* [x] Alert (`Alert.tsx`)
 
 ---
 
 ## Task F2.4 — Build Infrastructure Components
 
-Status: [ ]
+Status: [x]
 
-* [ ] StatusBadge
-* [ ] HealthBadge
-* [ ] MetricCard
-* [ ] ConnectionStatus
-* [ ] ShardCard
-* [ ] HealthIndicator
-* [ ] TenantMappingRow
-* [ ] ApiKeyRow
-* [ ] ActivityItem
+* [x] StatusBadge (`StatusBadge.tsx`)
+* [x] HealthBadge (`HealthBadge.tsx`)
+* [x] MetricCard (`MetricCard.tsx`)
+* [x] ConnectionStatus (`ConnectionStatus.tsx`)
+* [x] ShardCard (`ShardCard.tsx`)
+* [x] HealthIndicator (`HealthIndicator.tsx`)
+* [x] TenantMappingRow (`TenantMappingRow.tsx`)
+* [x] ApiKeyRow (`ApiKeyRow.tsx`)
+* [x] ActivityItem (`ActivityItem.tsx`)
 
 ---
 
 ## Task F2.5 — Build Feedback Components
 
-Status: [ ]
+Status: [x]
 
-* [ ] Loading state
-* [ ] Empty state
-* [ ] Error state
-* [ ] Success feedback
-* [ ] Confirmation dialog
-* [ ] Toast/notification system
+* [x] Loading state (`LoadingState.tsx`)
+* [x] Empty state (`EmptyState.tsx`)
+* [x] Error state (`ErrorState.tsx`)
+* [x] Success feedback
+* [x] Confirmation dialog (`ConfirmationDialog.tsx`)
+* [x] Toast/notification system (`Toast.tsx`)
 
 ### Gate
 
@@ -484,34 +484,34 @@ F2
 
 ## Task F3.1 — Build Navbar
 
-Status: [ ]
+Status: [x]
 
-* [ ] ShardFlow branding
-* [ ] Navigation
-* [ ] Documentation link
-* [ ] Sign in
-* [ ] Get started CTA
-* [ ] Responsive navigation
+* [x] ShardFlow branding
+* [x] Navigation
+* [x] Documentation link
+* [x] Sign in
+* [x] Get started CTA
+* [x] Responsive navigation drawer
 
 ---
 
 ## Task F3.2 — Build Hero
 
-Status: [ ]
+Status: [x]
 
-* [ ] Hero headline
-* [ ] Supporting copy
-* [ ] Primary CTA
-* [ ] Secondary CTA
-* [ ] Infrastructure visualization
-* [ ] Application → ShardFlow → database flow
-* [ ] Responsive layout
+* [x] Hero headline
+* [x] Supporting copy
+* [x] Primary CTA
+* [x] Secondary CTA
+* [x] Infrastructure visualization integration
+* [x] Application → ShardFlow → database flow
+* [x] Responsive layout
 
 ---
 
 ## Task F3.3 — Build Infrastructure Visualization
 
-Status: [ ]
+Status: [x]
 
 Visual concept:
 
@@ -531,31 +531,31 @@ Application
 DB01  DB02  DB03
 ```
 
-* [ ] Database nodes
-* [ ] Routing paths
-* [ ] Health indicators
-* [ ] Subtle data flow
-* [ ] Responsive behavior
-* [ ] No fake metrics
+* [x] Database nodes
+* [x] Routing paths
+* [x] Health indicators
+* [x] Subtle data flow (interactive request routing preview)
+* [x] Responsive behavior
+* [x] No fake metrics
 
 ---
 
 ## Task F3.4 — Build Problem Section
 
-Status: [ ]
+Status: [x]
 
 Explain:
 
-* [ ] Database scaling complexity
-* [ ] Shard management complexity
-* [ ] Application-level routing complexity
-* [ ] Operational visibility
+* [x] Database scaling complexity
+* [x] Shard management complexity
+* [x] Application-level routing complexity
+* [x] Operational visibility
 
 ---
 
 ## Task F3.5 — Build How It Works Section
 
-Status: [ ]
+Status: [x]
 
 Show:
 
@@ -575,7 +575,7 @@ MongoDB Shard
 
 ## Task F3.6 — Build Routing Section
 
-Status: [ ]
+Status: [x]
 
 Show examples:
 
@@ -591,19 +591,19 @@ Do not imply automatic rebalancing or unsupported load balancing.
 
 ## Task F3.7 — Build Shard Management Section
 
-Status: [ ]
+Status: [x]
 
-* [ ] Shard cards
-* [ ] Admin status
-* [ ] Health status
-* [ ] Database type
-* [ ] Connection representation
+* [x] Shard cards
+* [x] Admin status
+* [x] Health status
+* [x] Database type
+* [x] Connection representation
 
 ---
 
 ## Task F3.8 — Build Health Section
 
-Status: [ ]
+Status: [x]
 
 Show:
 
@@ -620,7 +620,7 @@ Explain health monitoring without implying V1 automatic failover.
 
 ## Task F3.9 — Build Developer Integration Section
 
-Status: [ ]
+Status: [x]
 
 Show:
 
@@ -640,7 +640,7 @@ MongoDB shard
 
 ## Task F3.10 — Build Architecture Section
 
-Status: [ ]
+Status: [x]
 
 Show:
 
@@ -662,21 +662,21 @@ Clearly distinguish control plane and data plane.
 
 ## Task F3.11 — Build CTA and Footer
 
-Status: [ ]
+Status: [x]
 
-* [ ] Final CTA
-* [ ] Documentation
-* [ ] Product navigation
-* [ ] Authentication links
-* [ ] Footer information
+* [x] Final CTA
+* [x] Documentation
+* [x] Product navigation
+* [x] Authentication links
+* [x] Footer information
 
 ### Gate
 
-* [ ] Entire landing page works
-* [ ] Mobile responsive
-* [ ] No placeholder content
-* [ ] No fake metrics
-* [ ] Visual hierarchy is consistent
+* [x] Entire landing page works
+* [x] Mobile responsive
+* [x] No placeholder content
+* [x] No fake metrics
+* [x] Visual hierarchy is consistent
 
 ---
 
@@ -697,7 +697,7 @@ F3
 
 ## Task F4.1 — Configure Application Routes
 
-Status: [ ]
+Status: [x]
 
 ```text
 /app
@@ -717,19 +717,19 @@ Status: [ ]
 
 ## Task F4.2 — Build Dashboard Layout
 
-Status: [ ]
+Status: [x]
 
-* [ ] Sidebar
-* [ ] Topbar
-* [ ] Main content area
-* [ ] Responsive layout
-* [ ] Mobile navigation
+* [x] Sidebar
+* [x] Topbar
+* [x] Main content area
+* [x] Responsive layout
+* [x] Mobile navigation
 
 ---
 
 ## Task F4.3 — Build Sidebar Navigation
 
-Status: [ ]
+Status: [x]
 
 ```text
 Overview
@@ -756,24 +756,24 @@ Settings
 
 ## Task F4.4 — Build Topbar
 
-Status: [ ]
+Status: [x]
 
-* [ ] Project switcher
-* [ ] Notifications
-* [ ] User menu
-* [ ] Breadcrumb/page context where required
+* [x] Project switcher
+* [x] Notifications
+* [x] User menu
+* [x] Breadcrumb/page context where required
 
 ---
 
 ## Task F4.5 — Build Protected Route Foundation
 
-Status: [ ]
+Status: [x]
 
-* [ ] Detect authenticated session
-* [ ] Protect `/app/*`
-* [ ] Redirect unauthenticated users
-* [ ] Handle session loading
-* [ ] Handle expired session
+* [x] Detect authenticated session
+* [x] Protect `/app/*`
+* [x] Redirect unauthenticated users
+* [x] Handle session loading
+* [x] Handle expired session
 
 ---
 
@@ -793,61 +793,61 @@ F4
 
 ## Task F5.1 — Build Sign In
 
-Status: [ ]
+Status: [x]
 
-* [ ] Email input
-* [ ] Password input
-* [ ] Sign-in action
-* [ ] Loading state
-* [ ] Error state
-* [ ] Success redirect
+* [x] Email input
+* [x] Password input
+* [x] Sign-in action
+* [x] Loading state
+* [x] Error state
+* [x] Success redirect
 
 ---
 
 ## Task F5.2 — Build Sign Up
 
-Status: [ ]
+Status: [x]
 
-* [ ] Registration form
-* [ ] Validation
-* [ ] Supabase registration
-* [ ] Error handling
-* [ ] Success state
+* [x] Registration form
+* [x] Validation
+* [x] Supabase registration
+* [x] Error handling
+* [x] Success state
 
 ---
 
 ## Task F5.3 — Build Forgot Password
 
-Status: [ ]
+Status: [x]
 
-* [ ] Email input
-* [ ] Reset request
-* [ ] Success state
-* [ ] Error state
+* [x] Email input
+* [x] Reset request
+* [x] Success state
+* [x] Error state
 
 ---
 
 ## Task F5.4 — Build Reset Password
 
-Status: [ ]
+Status: [x]
 
-* [ ] Password input
-* [ ] Confirmation input
-* [ ] Password update
-* [ ] Success state
-* [ ] Error state
+* [x] Password input
+* [x] Confirmation input
+* [x] Password update
+* [x] Success state
+* [x] Error state
 
 ---
 
 ## Task F5.5 — Complete Authentication Flow
 
-Status: [ ]
+Status: [x]
 
-* [ ] Session persistence
-* [ ] Route protection
-* [ ] Logout
-* [ ] Auth loading state
-* [ ] Expired session handling
+* [x] Session persistence
+* [x] Route protection
+* [x] Logout
+* [x] Auth loading state
+* [x] Expired session handling
 
 ### Rule
 

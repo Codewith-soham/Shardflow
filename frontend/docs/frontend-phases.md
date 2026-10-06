@@ -931,30 +931,30 @@ F6
 
 ## Task F7.1 — Shard List
 
-Status: [ ]
+Status: [x]
 
-* [ ] Fetch shards
-* [ ] Shard table/cards
-* [ ] Admin status
-* [ ] Health status
-* [ ] Database type
-* [ ] Loading state
-* [ ] Empty state
-* [ ] Error state
+* [x] Fetch shards
+* [x] Shard table/cards
+* [x] Admin status
+* [x] Health status
+* [x] Database type
+* [x] Loading state
+* [x] Empty state
+* [x] Error state
 
 ---
 
 ## Task F7.2 — Add Shard
 
-Status: [ ]
+Status: [x]
 
-* [ ] Add shard form
-* [ ] Shard name
-* [ ] Database type
-* [ ] Connection configuration
-* [ ] Validation
-* [ ] Secure handling
-* [ ] Success/error feedback
+* [x] Add shard form
+* [x] Shard name
+* [x] Database type
+* [x] Connection configuration
+* [x] Validation
+* [x] Secure handling
+* [x] Success/error feedback
 
 Never expose credentials in logs or normal UI responses.
 
@@ -962,25 +962,25 @@ Never expose credentials in logs or normal UI responses.
 
 ## Task F7.3 — Shard Details
 
-Status: [ ]
+Status: [x]
 
-* [ ] Shard identity
-* [ ] Admin status
-* [ ] Health status
-* [ ] Connection state
-* [ ] Relevant metadata
-* [ ] Activity
+* [x] Shard identity
+* [x] Admin status
+* [x] Health status
+* [x] Connection state
+* [x] Relevant metadata
+* [x] Activity
 
 ---
 
 ## Task F7.4 — Shard Administration
 
-Status: [ ]
+Status: [x]
 
-* [ ] Enable/disable where supported
-* [ ] Confirmation dialogs
-* [ ] Error handling
-* [ ] Permission handling
+* [x] Enable/disable where supported
+* [x] Confirmation dialogs
+* [x] Error handling
+* [x] Permission handling
 
 ---
 

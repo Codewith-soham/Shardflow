@@ -83,16 +83,16 @@ Task Status Legend:
 - `[ ]` **Task F5.5 — Complete Authentication Flow**
 
 ## Phase F6 — Projects
-- `[ ]` **Task F6.1 — Project List**
-- `[ ]` **Task F6.2 — Create Project**
-- `[ ]` **Task F6.3 — Project Selection**
-- `[ ]` **Task F6.4 — Project Details**
+- `[x]` **Task F6.1 — Project List**
+- `[x]` **Task F6.2 — Create Project**
+- `[x]` **Task F6.3 — Project Selection**
+- `[x]` **Task F6.4 — Project Details**
 
 ## Phase F7 — Shards
-- `[ ]` **Task F7.1 — Shard List**
-- `[ ]` **Task F7.2 — Add Shard**
-- `[ ]` **Task F7.3 — Shard Details**
-- `[ ]` **Task F7.4 — Shard Administration**
+- `[x]` **Task F7.1 — Shard List**
+- `[x]` **Task F7.2 — Add Shard**
+- `[x]` **Task F7.3 — Shard Details**
+- `[x]` **Task F7.4 — Shard Administration**
 
 ## Phase F8 — Routing
 - `[ ]` **Task F8.1 — Routing Overview**

@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import { Project } from '@/types';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { FolderKanban, Check, Info, ArrowRight } from 'lucide-react';
+import { FolderKanban, Check, Info, Server, ArrowRight } from 'lucide-react';
 import { useProject } from '@/app/providers/ProjectProvider';
 
 interface ProjectCardProps {
@@ -11,8 +12,14 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
+  const navigate = useNavigate();
   const { activeProject, setActiveProject } = useProject();
   const isActive = activeProject?.id === project.id;
+
+  const handleSelectAndManageShards = () => {
+    setActiveProject(project);
+    navigate('/app/shards');
+  };
 
   return (
     <Card
@@ -57,20 +64,26 @@ export function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
           <span>Details</span>
         </Button>
 
-        {isActive ? (
-          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-emerald-950 border border-emerald-800 text-xs font-semibold text-emerald-300">
-            <Check className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Active Workspace</span>
-          </div>
-        ) : (
-          <Button
-            onClick={() => setActiveProject(project)}
-            className="px-3 py-1 bg-emerald-950 hover:bg-emerald-900/60 border border-emerald-800/60 text-xs text-emerald-200 hover:text-white rounded-lg transition-all flex items-center space-x-1"
-          >
-            <span>Select Project</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Button>
-        )}
+        <div className="flex items-center space-x-2">
+          {isActive ? (
+            <Button
+              onClick={handleSelectAndManageShards}
+              className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-xs text-white font-semibold rounded-lg transition-all flex items-center space-x-1"
+            >
+              <Server className="w-3.5 h-3.5" />
+              <span>Manage Shards</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Button>
+          ) : (
+            <Button
+              onClick={handleSelectAndManageShards}
+              className="px-3 py-1 bg-emerald-950 hover:bg-emerald-900/60 border border-emerald-800/60 text-xs text-emerald-200 hover:text-white rounded-lg transition-all flex items-center space-x-1"
+            >
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Select & View Shards</span>
+            </Button>
+          )}
+        </div>
       </div>
     </Card>
   );

@@ -871,47 +871,47 @@ F5
 
 ## Task F6.1 — Project List
 
-Status: [ ]
+Status: [x]
 
-* [ ] Fetch projects
-* [ ] Display projects
-* [ ] Loading state
-* [ ] Empty state
-* [ ] Error state
+* [x] Fetch projects
+* [x] Display projects
+* [x] Loading state
+* [x] Empty state
+* [x] Error state
 
 ---
 
 ## Task F6.2 — Create Project
 
-Status: [ ]
+Status: [x]
 
-* [ ] Create project dialog/page
-* [ ] Form validation
-* [ ] API integration
-* [ ] Success handling
-* [ ] Error handling
+* [x] Create project dialog/page
+* [x] Form validation
+* [x] API integration
+* [x] Success handling
+* [x] Error handling
 
 ---
 
 ## Task F6.3 — Project Selection
 
-Status: [ ]
+Status: [x]
 
-* [ ] Project switcher
-* [ ] Persist selected project
-* [ ] Update project context
-* [ ] Reload project-specific data
+* [x] Project switcher
+* [x] Persist selected project
+* [x] Update project context
+* [x] Reload project-specific data
 
 ---
 
 ## Task F6.4 — Project Details
 
-Status: [ ]
+Status: [x]
 
-* [ ] Project information
-* [ ] Project identifier
-* [ ] Relevant metadata
-* [ ] Loading/error states
+* [x] Project information
+* [x] Project identifier
+* [x] Relevant metadata
+* [x] Loading/error states
 
 ---
 
@@ -931,30 +931,30 @@ F6
 
 ## Task F7.1 — Shard List
 
-Status: [ ]
+Status: [x]
 
-* [ ] Fetch shards
-* [ ] Shard table/cards
-* [ ] Admin status
-* [ ] Health status
-* [ ] Database type
-* [ ] Loading state
-* [ ] Empty state
-* [ ] Error state
+* [x] Fetch shards
+* [x] Shard table/cards
+* [x] Admin status
+* [x] Health status
+* [x] Database type
+* [x] Loading state
+* [x] Empty state
+* [x] Error state
 
 ---
 
 ## Task F7.2 — Add Shard
 
-Status: [ ]
+Status: [x]
 
-* [ ] Add shard form
-* [ ] Shard name
-* [ ] Database type
-* [ ] Connection configuration
-* [ ] Validation
-* [ ] Secure handling
-* [ ] Success/error feedback
+* [x] Add shard form
+* [x] Shard name
+* [x] Database type
+* [x] Connection configuration
+* [x] Validation
+* [x] Secure handling
+* [x] Success/error feedback
 
 Never expose credentials in logs or normal UI responses.
 
@@ -962,25 +962,25 @@ Never expose credentials in logs or normal UI responses.
 
 ## Task F7.3 — Shard Details
 
-Status: [ ]
+Status: [x]
 
-* [ ] Shard identity
-* [ ] Admin status
-* [ ] Health status
-* [ ] Connection state
-* [ ] Relevant metadata
-* [ ] Activity
+* [x] Shard identity
+* [x] Admin status
+* [x] Health status
+* [x] Connection state
+* [x] Relevant metadata
+* [x] Activity
 
 ---
 
 ## Task F7.4 — Shard Administration
 
-Status: [ ]
+Status: [x]
 
-* [ ] Enable/disable where supported
-* [ ] Confirmation dialogs
-* [ ] Error handling
-* [ ] Permission handling
+* [x] Enable/disable where supported
+* [x] Confirmation dialogs
+* [x] Error handling
+* [x] Permission handling
 
 ---
 

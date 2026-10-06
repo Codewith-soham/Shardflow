@@ -5,6 +5,10 @@ import { SignInPage } from '@/features/auth/pages/SignInPage';
 import { SignUpPage } from '@/features/auth/pages/SignUpPage';
 import { ForgotPasswordPage } from '@/features/auth/pages/ForgotPasswordPage';
 import { ResetPasswordPage } from '@/features/auth/pages/ResetPasswordPage';
+import { OverviewPage } from '@/features/projects/pages/OverviewPage';
+import { ProjectsPage } from '@/features/projects/pages/ProjectsPage';
+import { ShardsPage } from '@/features/shards/pages/ShardsPage';
+import { ShardDetailPage } from '@/features/shards/pages/ShardDetailPage';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Layers, Activity, Server, ShieldCheck, ArrowRight } from 'lucide-react';
 
@@ -107,42 +111,10 @@ export function AppRouter() {
           }
         >
           <Route index element={<Navigate to="/app/overview" replace />} />
-          <Route
-            path="overview"
-            element={
-              <TempPlaceholder
-                title="Dashboard Overview"
-                description="Monitor active database shards, request routing flow, health metrics, and project activity."
-              />
-            }
-          />
-          <Route
-            path="projects"
-            element={
-              <TempPlaceholder
-                title="Project Management"
-                description="Manage isolated database projects, environment credentials, and metadata configurations."
-              />
-            }
-          />
-          <Route
-            path="shards"
-            element={
-              <TempPlaceholder
-                title="Shard Registry"
-                description="Register, inspect, and configure backend MongoDB target shards across infrastructure."
-              />
-            }
-          />
-          <Route
-            path="shards/:shardId"
-            element={
-              <TempPlaceholder
-                title="Shard Detail"
-                description="View specific shard connection parameters, admin status, and health history."
-              />
-            }
-          />
+          <Route path="overview" element={<OverviewPage />} />
+          <Route path="projects" element={<ProjectsPage />} />
+          <Route path="shards" element={<ShardsPage />} />
+          <Route path="shards/:shardId" element={<ShardDetailPage />} />
           <Route
             path="routing"
             element={

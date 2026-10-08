@@ -2,16 +2,35 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '@/app/providers/AuthProvider';
 
+// Feature Pages & Layout Imports
+import { LandingPage } from '@/features/landing/pages/LandingPage';
+import { SignInPage } from '@/features/auth/pages/SignInPage';
+import { SignUpPage } from '@/features/auth/pages/SignUpPage';
+import { ForgotPasswordPage } from '@/features/auth/pages/ForgotPasswordPage';
+import { ResetPasswordPage } from '@/features/auth/pages/ResetPasswordPage';
+
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { OverviewPage } from '@/features/projects/pages/OverviewPage';
+import { ProjectsPage } from '@/features/projects/pages/ProjectsPage';
+import { ShardsPage } from '@/features/shards/pages/ShardsPage';
+import { ShardDetailPage } from '@/features/shards/pages/ShardDetailPage';
+import { RoutingPage } from '@/features/routing/pages/RoutingPage';
+import { ApiKeysPage } from '@/features/api-keys/pages/ApiKeysPage';
+import { HealthPage } from '@/features/health/pages/HealthPage';
+import { ActivityPage } from '@/features/activity/pages/ActivityPage';
+import { IntegrationPage } from '@/features/integration/pages/IntegrationPage';
+import { SettingsPage } from '@/features/settings/pages/SettingsPage';
+
 // Protected Route Guard
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuth();
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#09090B] flex items-center justify-center text-zinc-400 font-mono text-sm">
+      <div className="min-h-screen bg-[#050807] flex items-center justify-center text-zinc-400 font-mono text-sm">
         <div className="flex items-center space-x-3">
-          <div className="w-4 h-4 border-2 border-sky-400 border-t-transparent rounded-full animate-spin"></div>
-          <span>Authenticating session...</span>
+          <div className="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin"></div>
+          <span>Authenticating ShardFlow session...</span>
         </div>
       </div>
     );
@@ -24,116 +43,38 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-// Placeholder Page Wrapper for Router initialization test
-function TempPlaceholder({ title }: { title: string }) {
-  return (
-    <div className="p-8 text-zinc-200">
-      <h1 className="text-xl font-semibold mb-2">{title}</h1>
-      <p className="text-sm text-zinc-400 font-mono">Module route placeholder ready for implementation.</p>
-    </div>
-  );
-}
-
 export function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<TempPlaceholder title="ShardFlow Landing Page" />} />
-        <Route path="/sign-in" element={<TempPlaceholder title="Sign In" />} />
-        <Route path="/sign-up" element={<TempPlaceholder title="Sign Up" />} />
-        <Route path="/forgot-password" element={<TempPlaceholder title="Forgot Password" />} />
-        <Route path="/reset-password" element={<TempPlaceholder title="Reset Password" />} />
+        {/* Public Marketing & Auth Routes */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-        {/* Protected Dashboard Application Routes */}
+        {/* Protected Application Dashboard Routes */}
         <Route
           path="/app"
           element={
             <ProtectedRoute>
-              <Navigate to="/app/overview" replace />
+              <DashboardLayout />
             </ProtectedRoute>
           }
-        />
-        <Route
-          path="/app/overview"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="Dashboard Overview" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/app/projects"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="Project Management" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/app/shards"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="Shard Registry" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/app/shards/:shardId"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="Shard Detail" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/app/routing"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="Tenant Routing Mappings" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/app/api-keys"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="API Keys" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/app/health"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="Shard Health Monitor" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/app/activity"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="Activity Log" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/app/integration"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="Developer Integration" />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/app/settings"
-          element={
-            <ProtectedRoute>
-              <TempPlaceholder title="Settings" />
-            </ProtectedRoute>
-          }
-        />
+        >
+          <Route index element={<Navigate to="/app/overview" replace />} />
+          <Route path="overview" element={<OverviewPage />} />
+          <Route path="projects" element={<ProjectsPage />} />
+          <Route path="shards" element={<ShardsPage />} />
+          <Route path="shards/:shardId" element={<ShardDetailPage />} />
+          <Route path="routing" element={<RoutingPage />} />
+          <Route path="api-keys" element={<ApiKeysPage />} />
+          <Route path="health" element={<HealthPage />} />
+          <Route path="activity" element={<ActivityPage />} />
+          <Route path="integration" element={<IntegrationPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+        </Route>
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

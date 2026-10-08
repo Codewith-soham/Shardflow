@@ -1855,31 +1855,31 @@ Only then continue.
 
 ## Foundation
 
-* [ ] F0 — Contract Verification
-* [ ] F1 — Frontend Foundation
-* [ ] F2 — Design System
+* [x] F0 — Contract Verification
+* [x] F1 — Frontend Foundation
+* [x] F2 — Design System
 
 ## Public Experience
 
-* [ ] F3 — Landing Page
+* [x] F3 — Landing Page
 
 ## Product Experience
 
-* [ ] F4 — Application Shell
-* [ ] F5 — Authentication
-* [ ] F6 — Projects
-* [ ] F7 — Shards
-* [ ] F8 — Routing
-* [ ] F9 — API Keys
-* [ ] F10 — Health
-* [ ] F11 — Activity
-* [ ] F12 — Integration
-* [ ] F13 — Settings
+* [x] F4 — Application Shell
+* [x] F5 — Authentication
+* [x] F6 — Projects
+* [x] F7 — Shards
+* [x] F8 — Routing
+* [x] F9 — API Keys
+* [x] F10 — Health
+* [x] F11 — Activity
+* [x] F12 — Integration
+* [x] F13 — Settings
 
 ## Finalization
 
-* [ ] F14 — Integration & Polish
-* [ ] F15 — Production Readiness
+* [x] F14 — Integration & Polish
+* [x] F15 — Production Readiness
 
 ---
 
@@ -1887,25 +1887,25 @@ Only then continue.
 
 The frontend is considered complete only when:
 
-* [ ] All F0–F15 phases completed
-* [ ] All required tasks completed
-* [ ] All acceptance criteria satisfied
-* [ ] Backend API integration verified
-* [ ] Supabase authentication verified
-* [ ] Project isolation verified through backend behavior
-* [ ] Shard management verified
-* [ ] Routing verified
-* [ ] API key lifecycle verified
-* [ ] Health monitoring UI verified
-* [ ] Activity UI verified
-* [ ] Integration documentation verified
-* [ ] Responsive behavior verified
-* [ ] Accessibility reviewed
-* [ ] Security reviewed
-* [ ] Production build succeeds
-* [ ] No fake production data remains
-* [ ] No unsupported V1 functionality is represented
-* [ ] No critical console errors remain
+* [x] All F0–F15 phases completed
+* [x] All required tasks completed
+* [x] All acceptance criteria satisfied
+* [x] Backend API integration verified
+* [x] Supabase authentication verified
+* [x] Project isolation verified through backend behavior
+* [x] Shard management verified
+* [x] Routing verified
+* [x] API key lifecycle verified
+* [x] Health monitoring UI verified
+* [x] Activity UI verified
+* [x] Integration documentation verified
+* [x] Responsive behavior verified
+* [x] Accessibility reviewed
+* [x] Security reviewed
+* [x] Production build succeeds
+* [x] No fake production data remains
+* [x] No unsupported V1 functionality is represented
+* [x] No critical console errors remain
 
 ---
 

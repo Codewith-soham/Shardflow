@@ -65,6 +65,37 @@ export async function createProject(payload: { name: string; description?: strin
   }
 }
 
+export async function updateProject(id: string, payload: { name: string; description?: string }): Promise<Project> {
+  try {
+    const updated = await apiClient<Project>(`/projects/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(payload),
+    });
+    MOCK_PROJECTS = MOCK_PROJECTS.map((p) => (p.id === id ? updated : p));
+    return updated;
+  } catch {
+    const existing = MOCK_PROJECTS.find((p) => p.id === id);
+    const updated: Project = {
+      id,
+      name: payload.name,
+      description: payload.description,
+      status: existing?.status || 'ACTIVE',
+      createdAt: existing?.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    MOCK_PROJECTS = MOCK_PROJECTS.map((p) => (p.id === id ? updated : p));
+    return updated;
+  }
+}
+
+export async function deleteProject(id: string): Promise<void> {
+  try {
+    await apiClient(`/projects/${id}`, { method: 'DELETE' });
+  } catch {
+    MOCK_PROJECTS = MOCK_PROJECTS.filter((p) => p.id !== id);
+  }
+}
+
 export async function getProjectById(id: string): Promise<Project | null> {
   try {
     const project = await apiClient<Project>(`/projects/${id}`);

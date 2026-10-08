@@ -11,13 +11,22 @@ const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'shardflow_active_project';
 
+const DEFAULT_PROJECT: Project = {
+  id: 'proj_prod_shard_01',
+  name: 'Production Shard Cluster',
+  description: 'Primary multi-region MongoDB sharded cluster servicing core enterprise tenant workloads.',
+  status: 'ACTIVE',
+  createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+  updatedAt: new Date().toISOString(),
+};
+
 export function ProjectProvider({ children }: { children: React.ReactNode }) {
   const [activeProject, setActiveProjectState] = useState<Project | null>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : null;
+      return saved ? JSON.parse(saved) : DEFAULT_PROJECT;
     } catch {
-      return null;
+      return DEFAULT_PROJECT;
     }
   });
 

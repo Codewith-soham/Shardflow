@@ -9,8 +9,14 @@ import { OverviewPage } from '@/features/projects/pages/OverviewPage';
 import { ProjectsPage } from '@/features/projects/pages/ProjectsPage';
 import { ShardsPage } from '@/features/shards/pages/ShardsPage';
 import { ShardDetailPage } from '@/features/shards/pages/ShardDetailPage';
+import { RoutingPage } from '@/features/routing/pages/RoutingPage';
+import { ApiKeysPage } from '@/features/api-keys/pages/ApiKeysPage';
+import { HealthPage } from '@/features/health/pages/HealthPage';
+import { ActivityPage } from '@/features/activity/pages/ActivityPage';
+import { IntegrationPage } from '@/features/integration/pages/IntegrationPage';
+import { SettingsPage } from '@/features/settings/pages/SettingsPage';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { Layers, Activity, Server, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Layers } from 'lucide-react';
 
 // Protected Route Guard
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -42,54 +48,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-// Module Placeholder Page with obsidian & emerald design language
-function TempPlaceholder({ title, description }: { title: string; description: string }) {
-  return (
-    <div className="space-y-6">
-      <div className="p-6 rounded-2xl bg-[#06100B] border border-emerald-900/60 shadow-xl relative overflow-hidden">
-        <div className="pointer-events-none absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-2xl" />
-        <div className="flex items-start justify-between relative z-10">
-          <div className="space-y-2">
-            <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-800/60 text-[10px] font-mono text-emerald-300">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-              <span>Module Initialized</span>
-            </div>
-            <h2 className="text-xl font-bold text-white tracking-tight">{title}</h2>
-            <p className="text-xs text-zinc-400 max-w-xl">{description}</p>
-          </div>
-          <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-800/50 text-emerald-400 hidden sm:block">
-            <Server className="w-6 h-6" />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-4 rounded-xl bg-[#06100B] border border-emerald-950 flex items-center space-x-3">
-          <Activity className="w-5 h-5 text-emerald-400 shrink-0" />
-          <div>
-            <div className="text-[11px] font-mono text-zinc-400">Data Pipeline</div>
-            <div className="text-xs font-semibold text-zinc-200">Active Shard Mesh</div>
-          </div>
-        </div>
-        <div className="p-4 rounded-xl bg-[#06100B] border border-emerald-950 flex items-center space-x-3">
-          <ShieldCheck className="w-5 h-5 text-teal-400 shrink-0" />
-          <div>
-            <div className="text-[11px] font-mono text-zinc-400">Security Scope</div>
-            <div className="text-xs font-semibold text-zinc-200">Project-Isolated</div>
-          </div>
-        </div>
-        <div className="p-4 rounded-xl bg-[#06100B] border border-emerald-950 flex items-center space-x-3">
-          <ArrowRight className="w-5 h-5 text-emerald-400 shrink-0" />
-          <div>
-            <div className="text-[11px] font-mono text-zinc-400">Phase Status</div>
-            <div className="text-xs font-semibold text-emerald-300">Phase F5 Ready</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function AppRouter() {
   return (
     <BrowserRouter>
@@ -115,60 +73,12 @@ export function AppRouter() {
           <Route path="projects" element={<ProjectsPage />} />
           <Route path="shards" element={<ShardsPage />} />
           <Route path="shards/:shardId" element={<ShardDetailPage />} />
-          <Route
-            path="routing"
-            element={
-              <TempPlaceholder
-                title="Tenant Routing Mappings"
-                description="Configure explicit tenant-to-shard mapping rules and default fallback assignments."
-              />
-            }
-          />
-          <Route
-            path="api-keys"
-            element={
-              <TempPlaceholder
-                title="API Keys"
-                description="Generate, inspect, and revoke project API keys used by developer client applications."
-              />
-            }
-          />
-          <Route
-            path="health"
-            element={
-              <TempPlaceholder
-                title="Shard Health Monitor"
-                description="Real-time shard connection pinging, availability status tracking, and latency diagnostics."
-              />
-            }
-          />
-          <Route
-            path="activity"
-            element={
-              <TempPlaceholder
-                title="Activity Log"
-                description="Audit trail of administrative actions, shard modifications, and security events."
-              />
-            }
-          />
-          <Route
-            path="integration"
-            element={
-              <TempPlaceholder
-                title="Developer Integration Guide"
-                description="SDK usage snippets, HTTP header specifications, and API documentation for applications."
-              />
-            }
-          />
-          <Route
-            path="settings"
-            element={
-              <TempPlaceholder
-                title="Account Settings"
-                description="Manage control plane profile, authentication credentials, and system preferences."
-              />
-            }
-          />
+          <Route path="routing" element={<RoutingPage />} />
+          <Route path="api-keys" element={<ApiKeysPage />} />
+          <Route path="health" element={<HealthPage />} />
+          <Route path="activity" element={<ActivityPage />} />
+          <Route path="integration" element={<IntegrationPage />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
 
         {/* Fallback */}

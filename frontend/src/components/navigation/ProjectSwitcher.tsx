@@ -17,6 +17,10 @@ export function ProjectSwitcher() {
       if (!activeProject || !projects.some((p) => p.id === activeProject.id)) {
         setActiveProject(projects[0]);
       }
+    } else {
+      if (activeProject) {
+        setActiveProject(null);
+      }
     }
   }, [projects, activeProject, setActiveProject]);
 
@@ -31,12 +35,7 @@ export function ProjectSwitcher() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const currentProject = activeProject || projects[0] || {
-    id: 'proj_default',
-    name: 'Select Project Workspace',
-    description: 'No Project Selected',
-    status: 'ACTIVE',
-  };
+  const currentProject = activeProject || (projects.length > 0 ? projects[0] : null);
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -50,10 +49,10 @@ export function ProjectSwitcher() {
         </div>
         <div className="flex flex-col items-start text-left">
           <span className="font-semibold text-white tracking-tight leading-tight max-w-[130px] sm:max-w-[180px] truncate">
-            {currentProject.name}
+            {currentProject?.name || 'No Project Selected'}
           </span>
           <span className="text-[9px] font-mono text-emerald-400/80 uppercase">
-            {currentProject.description || 'ACTIVE'}
+            {currentProject?.description || 'Select or create a project'}
           </span>
         </div>
         <ChevronDown className={`w-3.5 h-3.5 text-emerald-400/70 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
@@ -68,7 +67,7 @@ export function ProjectSwitcher() {
 
           <div className="py-1 max-h-60 overflow-y-auto">
             {projects.map((proj) => {
-              const isSelected = proj.id === currentProject.id;
+              const isSelected = proj.id === currentProject?.id;
               return (
                 <button
                   key={proj.id}

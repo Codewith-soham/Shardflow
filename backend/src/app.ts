@@ -76,6 +76,16 @@ export async function buildApp(
   app.setErrorHandler(errorHandler);
   app.setNotFoundHandler(notFoundHandler);
 
+  // Centralized CORS support for frontend clients
+  app.addHook('onRequest', async (request, reply) => {
+    reply.header('Access-Control-Allow-Origin', '*');
+    reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-API-Key');
+    if (request.method === 'OPTIONS') {
+      return reply.status(204).send();
+    }
+  });
+
   // Cleanly close database connections when Fastify server is closed
   app.addHook('onClose', async () => {
     await closeDatabase();

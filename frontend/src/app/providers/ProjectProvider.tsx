@@ -11,28 +11,31 @@ const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'shardflow_active_project';
 
-const DEFAULT_PROJECT: Project = {
-  id: 'proj_prod_shard_01',
-  name: 'Production Shard Cluster',
-  description: 'Primary multi-region MongoDB sharded cluster servicing core enterprise tenant workloads.',
-  status: 'ACTIVE',
-  createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
-  updatedAt: new Date().toISOString(),
-};
-
 export function ProjectProvider({ children }: { children: React.ReactNode }) {
   const [activeProject, setActiveProjectState] = useState<Project | null>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : DEFAULT_PROJECT;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Only keep genuine MongoDB ObjectIds (24 hex characters), reject mock 'proj_' IDs
+        if (parsed && typeof parsed.id === 'string' && !parsed.id.startsWith('proj_')) {
+          return parsed;
+        }
+      }
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem('shardflow_projects_store');
+      localStorage.removeItem('shardflow_shards_store');
+      localStorage.removeItem('shardflow_api_keys_store');
+      localStorage.removeItem('shardflow_mappings_store');
     } catch {
-      return DEFAULT_PROJECT;
+      // ignore
     }
+    return null;
   });
 
   const setActiveProject = (project: Project | null) => {
     setActiveProjectState(project);
-    if (project) {
+    if (project && !project.id.startsWith('proj_')) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(project));
     } else {
       localStorage.removeItem(STORAGE_KEY);
@@ -40,8 +43,10 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    if (activeProject) {
+    if (activeProject && !activeProject.id.startsWith('proj_')) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(activeProject));
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
     }
   }, [activeProject]);
 

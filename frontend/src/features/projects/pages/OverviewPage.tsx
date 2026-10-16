@@ -45,11 +45,11 @@ export function OverviewPage() {
               <span>Active Control Plane Scope</span>
             </div>
             <h1 className="text-2xl font-extrabold text-white tracking-tight">
-              {activeProject ? activeProject.name : 'Production Shard Cluster'}
+              {activeProject ? activeProject.name : 'No Project Selected'}
             </h1>
             <p className="text-xs text-zinc-400">
               {activeProject?.description ||
-                'Multi-tenant MongoDB database sharding control plane for automated tenant resolution and request routing.'}
+                'Create or select a project to configure shards, tenant routing, and API keys.'}
             </p>
             {activeProject && (
               <div className="pt-1 flex items-center space-x-2 font-mono text-[11px] text-zinc-400">

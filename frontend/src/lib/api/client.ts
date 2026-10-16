@@ -17,10 +17,23 @@ export class ApiError extends Error {
 async function getAuthToken(): Promise<string | null> {
   try {
     const { data } = await supabase.auth.getSession();
-    return data.session?.access_token || null;
-  } catch {
-    return null;
-  }
+    if (data.session?.access_token) {
+      return data.session.access_token;
+    }
+  } catch {}
+
+  try {
+    const demo = localStorage.getItem('shardflow_demo_user');
+    if (demo) {
+      const parsed = JSON.parse(demo);
+      const email = parsed.email || 'demo@shardflow.io';
+      const id = parsed.id || 'dev';
+      const encodedEmail = btoa(email);
+      return `demo_${id}_${encodedEmail}`;
+    }
+  } catch {}
+
+  return null;
 }
 
 export async function apiClient<T>(

@@ -183,6 +183,26 @@ describe('AuthService & User Synchronization (Task 2.3)', () => {
       statusCode: 403,
     });
   });
+
+  it('rejects demo_ prefixed tokens and never creates a user (no auth bypass)', async () => {
+    mockSupabase.getUser = vi
+      .fn()
+      .mockResolvedValue({ data: { user: null }, error: new Error('Invalid signature') });
+
+    const authService = new AuthService({
+      userRepository: mockUserRepo as UserRepository,
+      supabaseAuth: mockSupabase,
+    });
+
+    const forged = `demo_x_${Buffer.from('attacker@example.com').toString('base64')}`;
+
+    await expect(authService.authenticateAndSyncUser(forged)).rejects.toMatchObject({
+      code: ErrorCode.INVALID_AUTH_TOKEN,
+      statusCode: 401,
+    });
+    expect(mockSupabase.getUser).toHaveBeenCalledWith(forged);
+    expect(mockUserRepo.create).not.toHaveBeenCalled();
+  });
 });
 
 describe('Authentication Middleware (Task 2.2)', () => {

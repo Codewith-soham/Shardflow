@@ -5,7 +5,12 @@ import { closeDatabase, isDatabaseConnected } from './database/index.js';
 import { errorHandler, notFoundHandler } from './errors/index.js';
 import { createLoggerOptions } from './observability/index.js';
 
-import { createSupabaseClient, AuthService } from './auth/index.js';
+import {
+  createSupabaseClient,
+  AuthService,
+  PasswordResetService,
+  registerPasswordResetRoutes,
+} from './auth/index.js';
 import {
   UserRepository,
   ProjectRepository,
@@ -41,6 +46,7 @@ import {
 
 export interface AppDependencies {
   authService?: AuthService;
+  passwordResetService?: PasswordResetService;
   projectService?: ProjectService;
   projectController?: ProjectController;
   apiKeyService?: ApiKeyService;
@@ -108,6 +114,16 @@ export async function buildApp(
       supabaseAuth: supabaseAuth.auth,
     });
 
+  const passwordResetService =
+    dependencies.passwordResetService ??
+    new PasswordResetService({
+      auth: supabaseAuth.auth,
+      admin: config.supabaseServiceRoleKey
+        ? createSupabaseClient(config.supabaseUrl, config.supabaseServiceRoleKey).auth.admin
+        : undefined,
+      redirectTo: config.passwordResetRedirectUrl,
+    });
+
   const projectService =
     dependencies.projectService ?? new ProjectService(new ProjectRepository());
   const projectController =
@@ -137,6 +153,7 @@ export async function buildApp(
   const healthController =
     dependencies.healthController ?? new HealthController(healthService);
 
+  registerPasswordResetRoutes(app, passwordResetService);
   registerMeRoutes(app, authService);
   registerProjectRoutes(app, authService, projectController);
   registerApiKeyRoutes(app, authService, apiKeyController);

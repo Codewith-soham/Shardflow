@@ -23,7 +23,7 @@ export function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      await apiClient<null>('/api/v1/auth/forgot-password', {
+      await apiClient<null>('/auth/forgot-password', {
         method: 'POST',
         body: JSON.stringify({ email: email.trim() }),
       });

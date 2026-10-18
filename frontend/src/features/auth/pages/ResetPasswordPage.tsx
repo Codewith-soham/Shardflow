@@ -1,11 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { supabase } from '@/lib/supabase/client';
-import { Layers, Lock, ArrowRight, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
+import { apiClient, ApiError } from '@/lib/api/client';
+import { Layers, Lock, ArrowRight, AlertCircle, CheckCircle2, Loader2, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 
+type RecoveryLink = { status: 'valid'; accessToken: string } | { status: 'invalid'; reason: string };
+
+let cachedLink: RecoveryLink | null = null;
+
+/**
+ * Reads the recovery token from the emailed link, then strips it from the address bar.
+ * Memoized because the hash is gone after the first read (React StrictMode runs effects twice).
+ */
+function readRecoveryLink(): RecoveryLink {
+  if (cachedLink) return cachedLink;
+  cachedLink = parseRecoveryLink();
+  return cachedLink;
+}
+
+function parseRecoveryLink(): RecoveryLink {
+  const params = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+  const accessToken = params.get('access_token');
+  const type = params.get('type');
+  const linkError = params.get('error_description') || params.get('error');
+
+  window.history.replaceState(null, '', window.location.pathname);
+
+  if (linkError) {
+    return { status: 'invalid', reason: linkError.replace(/\+/g, ' ') };
+  }
+  if (!accessToken || type !== 'recovery') {
+    return { status: 'invalid', reason: 'This password reset link is missing or malformed.' };
+  }
+  return { status: 'valid', accessToken };
+}
+
 export function ResetPasswordPage() {
+  const [link, setLink] = useState<RecoveryLink | null>(null);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -13,6 +45,10 @@ export function ResetPasswordPage() {
   const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLink(readRecoveryLink());
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,26 +69,26 @@ export function ResetPasswordPage() {
       return;
     }
 
+    if (link?.status !== 'valid') return;
+
     setLoading(true);
 
     try {
-      const { error: updateError } = await supabase.auth.updateUser({
-        password,
+      await apiClient<null>('/api/v1/auth/reset-password', {
+        method: 'POST',
+        body: JSON.stringify({ accessToken: link.accessToken, password }),
       });
-
-      if (updateError) {
-        if (updateError.message.includes('placeholder') || updateError.message.includes('fetch')) {
-          console.warn('Supabase not configured, bypassing for local demonstration');
-          setSuccess(true);
-          return;
-        }
-        throw updateError;
-      }
-
       setSuccess(true);
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Failed to update password.';
-      setError(message);
+      if (err instanceof ApiError && err.status === 401) {
+        setLink({ status: 'invalid', reason: 'This reset link has expired or was already used.' });
+      } else if (err instanceof ApiError && err.status === 429) {
+        setError('Too many attempts. Please wait a few minutes and try again.');
+      } else if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError('Unable to reach the server. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -94,7 +130,24 @@ export function ResetPasswordPage() {
             </div>
           )}
 
-          {success ? (
+          {link?.status === 'invalid' && !success ? (
+            <div className="space-y-4 text-center py-2 animate-in fade-in duration-200">
+              <div className="w-12 h-12 rounded-2xl bg-rose-950 border border-rose-900/80 text-rose-400 mx-auto flex items-center justify-center">
+                <XCircle className="w-6 h-6" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-white">Reset link unavailable</h3>
+                <p className="text-xs text-zinc-400">{link.reason}</p>
+              </div>
+              <Link
+                to="/forgot-password"
+                className="inline-flex items-center space-x-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors pt-2"
+              >
+                <span>Request a new reset link</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          ) : success ? (
             <div className="space-y-4 text-center py-2 animate-in fade-in duration-200">
               <div className="w-12 h-12 rounded-2xl bg-emerald-950 border border-emerald-800/80 text-emerald-400 mx-auto flex items-center justify-center glow-emerald">
                 <CheckCircle2 className="w-6 h-6" />

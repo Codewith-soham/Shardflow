@@ -8,6 +8,8 @@ export interface AppConfig {
   supabaseAnonKey: string;
   supabaseServiceRoleKey?: string;
   supabaseJwtSecret?: string;
+  /** Frontend URL that password-reset emails link to. */
+  passwordResetRedirectUrl?: string;
 }
 
 export function loadConfig(): AppConfig {
@@ -45,5 +47,8 @@ export function loadConfig(): AppConfig {
     supabaseAnonKey,
     supabaseServiceRoleKey: process.env['SUPABASE_SERVICE_ROLE_KEY']?.trim(),
     supabaseJwtSecret: process.env['SUPABASE_JWT_SECRET']?.trim(),
+    passwordResetRedirectUrl:
+      process.env['PASSWORD_RESET_REDIRECT_URL']?.trim() ||
+      (nodeEnv === 'production' ? undefined : 'http://localhost:5173/reset-password'),
   };
 }

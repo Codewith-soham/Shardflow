@@ -2,33 +2,17 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase/client';
 
-export interface DemoUser {
-  id: string;
-  email: string;
-  supabaseUserId?: string;
-}
-
 interface AuthContextType {
-  user: User | DemoUser | null;
+  user: User | null;
   session: Session | null;
   isLoading: boolean;
-  setDemoUser: (email: string) => void;
   signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const DEMO_USER_KEY = 'shardflow_demo_user';
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | DemoUser | null>(() => {
-    try {
-      const saved = localStorage.getItem(DEMO_USER_KEY);
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
-  });
+  const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -51,25 +35,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        setSession(session);
-        setUser(session.user);
-        localStorage.removeItem(DEMO_USER_KEY);
-      }
+      setSession(session);
+      setUser(session?.user ?? null);
       setIsLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
-
-  const setDemoUser = (email: string) => {
-    const demoUser: DemoUser = {
-      id: 'usr_' + Math.random().toString(36).substring(2, 9),
-      email: email || 'admin@shardflow.io',
-    };
-    setUser(demoUser);
-    localStorage.setItem(DEMO_USER_KEY, JSON.stringify(demoUser));
-  };
 
   const signOut = async () => {
     try {
@@ -79,11 +51,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     setUser(null);
     setSession(null);
-    localStorage.removeItem(DEMO_USER_KEY);
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, isLoading, setDemoUser, signOut }}>
+    <AuthContext.Provider value={{ user, session, isLoading, signOut }}>
       {children}
     </AuthContext.Provider>
   );

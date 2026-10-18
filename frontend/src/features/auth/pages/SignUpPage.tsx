@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/app/providers/AuthProvider';
 import { supabase } from '@/lib/supabase/client';
 import { Layers, Mail, Lock, ArrowRight, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -13,7 +12,6 @@ export function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { setDemoUser } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,25 +42,19 @@ export function SignUpPage() {
       });
 
       if (authError) {
-        // If placeholder credentials or network warning, proceed with demo user session
-        console.warn('Supabase auth notice:', authError.message);
-        setDemoUser(email);
-        navigate('/app/overview', { replace: true });
+        setError(authError.message || 'Sign up failed. Please try again.');
         return;
       }
 
       if (data.session) {
         navigate('/app/overview', { replace: true });
       } else {
-        // Registration successful; set active session so user sees control plane
-        setDemoUser(email);
-        navigate('/app/overview', { replace: true });
+        // Email confirmation is required before a session exists
+        navigate('/sign-in', { replace: true });
       }
     } catch (err: unknown) {
-      // Graceful fallback to demo user on local environment
-      console.warn('Supabase auth fallback:', err);
-      setDemoUser(email);
-      navigate('/app/overview', { replace: true });
+      console.warn('Supabase auth error:', err);
+      setError('Unable to reach the authentication service. Please try again.');
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/app/providers/AuthProvider';
 import { supabase } from '@/lib/supabase/client';
 import { Layers, Mail, Lock, ArrowRight, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -12,7 +11,6 @@ export function SignInPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { setDemoUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -36,22 +34,18 @@ export function SignInPage() {
       });
 
       if (authError) {
-        console.warn('Supabase auth notice:', authError.message);
-        setDemoUser(email);
-        navigate(from, { replace: true });
+        setError(authError.message || 'Sign in failed. Check your credentials.');
         return;
       }
 
       if (data.session) {
         navigate(from, { replace: true });
       } else {
-        setDemoUser(email);
-        navigate(from, { replace: true });
+        setError('Sign in failed. No session was created.');
       }
     } catch (err: unknown) {
-      console.warn('Supabase auth fallback:', err);
-      setDemoUser(email);
-      navigate(from, { replace: true });
+      console.warn('Supabase auth error:', err);
+      setError('Unable to reach the authentication service. Please try again.');
     } finally {
       setLoading(false);
     }

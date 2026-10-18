@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/lib/supabase/client';
+import { apiClient, ApiError } from '@/lib/api/client';
 import { Layers, Mail, ArrowLeft, AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -23,24 +23,21 @@ export function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      const redirectTo = `${window.location.origin}/reset-password`;
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo,
+      await apiClient<null>('/api/v1/auth/forgot-password', {
+        method: 'POST',
+        body: JSON.stringify({ email: email.trim() }),
       });
-
-      if (resetError) {
-        if (resetError.message.includes('placeholder') || resetError.message.includes('fetch')) {
-          console.warn('Supabase not configured, bypassing for local demonstration');
-          setSent(true);
-          return;
-        }
-        throw resetError;
-      }
-
       setSent(true);
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Failed to send password reset request.';
-      setError(message);
+      if (err instanceof ApiError && err.status === 429) {
+        setError('Too many requests. Please wait a few minutes and try again.');
+      } else if (err instanceof ApiError && err.status >= 500) {
+        setError('Password reset is temporarily unavailable. Please try again later.');
+      } else if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError('Unable to reach the server. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

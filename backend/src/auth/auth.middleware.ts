@@ -5,6 +5,7 @@ import { ErrorCode } from '../errors/codes.js';
 import { UnauthorizedError } from '../errors/app-error.js';
 import type { User } from '../control-plane/models/user.model.js';
 import type { AuthService } from './auth.service.js';
+import { markAuthGuard } from './route-guard.js';
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -17,7 +18,7 @@ declare module 'fastify' {
  * Creates a Fastify preHandler hook for Supabase authentication.
  */
 export function createAuthMiddleware(authService: AuthService) {
-  return async function requireAuth(request: FastifyRequest, _reply: FastifyReply): Promise<void> {
+  return markAuthGuard(async function requireAuth(request: FastifyRequest, _reply: FastifyReply): Promise<void> {
     const authHeader = request.headers.authorization;
 
     if (!authHeader) {
@@ -40,5 +41,5 @@ export function createAuthMiddleware(authService: AuthService) {
 
     request.user = user;
     request.supabaseUser = supabaseUser;
-  };
+  });
 }

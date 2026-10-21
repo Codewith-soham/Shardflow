@@ -10,6 +10,7 @@ import {
   AuthService,
   PasswordResetService,
   registerPasswordResetRoutes,
+  enforceRouteProtection,
 } from './auth/index.js';
 import {
   UserRepository,
@@ -91,6 +92,9 @@ export async function buildApp(
       return reply.status(204).send();
     }
   });
+
+  // Default-deny: any route registered without an auth guard (and not in PUBLIC_ROUTES) fails startup
+  enforceRouteProtection(app);
 
   // Cleanly close database connections when Fastify server is closed
   app.addHook('onClose', async () => {

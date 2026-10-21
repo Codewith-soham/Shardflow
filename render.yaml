@@ -28,3 +28,5 @@ services:
         sync: false
       - key: SHARD_ENCRYPTION_KEY
         sync: false
+      - key: PASSWORD_RESET_REDIRECT_URL
+        sync: false

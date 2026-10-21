@@ -1,4 +1,4 @@
-import { createHash, randomBytes } from 'node:crypto';
+import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
@@ -55,6 +55,16 @@ export const updateApiKeySchema = z.object({
  */
 export function hashApiKey(rawKey: string): string {
   return createHash('sha256').update(rawKey).digest('hex');
+}
+
+/**
+ * Verifies a presented raw key against a stored SHA-256 hash in constant time.
+ * Defence in depth on top of the indexed hash lookup.
+ */
+export function verifyApiKeyHash(rawKey: string, storedHash: string): boolean {
+  const presented = Buffer.from(hashApiKey(rawKey), 'hex');
+  const stored = Buffer.from(storedHash, 'hex');
+  return presented.length === stored.length && timingSafeEqual(presented, stored);
 }
 
 /**

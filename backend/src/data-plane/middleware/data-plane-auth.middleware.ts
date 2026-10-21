@@ -2,8 +2,10 @@ import type { FastifyRequest, FastifyReply } from 'fastify';
 
 import { ErrorCode } from '../../errors/codes.js';
 import { UnauthorizedError, ForbiddenError, NotFoundError } from '../../errors/app-error.js';
+import { markAuthGuard } from '../../auth/route-guard.js';
 import {
   hashApiKey,
+  verifyApiKeyHash,
   isApiKeyActive,
   type ApiKey,
   type Project,
@@ -42,7 +44,7 @@ export function createDataPlaneAuthMiddleware(options: DataPlaneAuthOptions = {}
   const apiKeyRepo = options.apiKeyRepository ?? new ApiKeyRepository();
   const projectRepo = options.projectRepository ?? new ProjectRepository();
 
-  return async function dataPlaneAuthMiddleware(
+  return markAuthGuard(async function dataPlaneAuthMiddleware(
     request: FastifyRequest,
     _reply: FastifyReply
   ): Promise<void> {
@@ -55,10 +57,10 @@ export function createDataPlaneAuthMiddleware(options: DataPlaneAuthOptions = {}
       );
     }
 
-    const keyHash = hashApiKey(rawApiKey.trim());
-    const apiKey = await apiKeyRepo.findByKeyHash(keyHash);
+    const presentedKey = rawApiKey.trim();
+    const apiKey = await apiKeyRepo.findByKeyHash(hashApiKey(presentedKey));
 
-    if (!apiKey) {
+    if (!apiKey || !verifyApiKeyHash(presentedKey, apiKey.keyHash)) {
       throw new UnauthorizedError(
         'Invalid API key',
         ErrorCode.INVALID_API_KEY
@@ -101,5 +103,5 @@ export function createDataPlaneAuthMiddleware(options: DataPlaneAuthOptions = {}
       apiKey,
       project,
     };
-  };
+  });
 }

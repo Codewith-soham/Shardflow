@@ -19,7 +19,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Layers } from 'lucide-react';
 
 // Protected Route Guard
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
+export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuth();
   const location = useLocation();
 

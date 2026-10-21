@@ -53,7 +53,10 @@ export class PasswordResetService {
    * Triggers a reset email. Succeeds silently whether or not the account exists
    * so the endpoint cannot be used to enumerate registered emails.
    */
-  async requestReset(email: string): Promise<void> {
+  async requestReset(
+    email: string,
+    onSuppressedError?: (info: { status?: number; message: string }) => void
+  ): Promise<void> {
     let result: Awaited<ReturnType<PasswordResetAuthClient['resetPasswordForEmail']>>;
     try {
       result = await this.auth.resetPasswordForEmail(
@@ -81,7 +84,9 @@ export class PasswordResetService {
         error.message
       );
     }
-    // Other 4xx (unknown email, etc.) are deliberately indistinguishable from success.
+    // Other 4xx (unknown email, etc.) are deliberately indistinguishable from success to the client,
+    // but are surfaced to the server log so misconfiguration (e.g. SMTP restrictions) is diagnosable.
+    onSuppressedError?.({ status: error.status, message: error.message });
   }
 
   /** Sets a new password using the recovery access token from the emailed link. */

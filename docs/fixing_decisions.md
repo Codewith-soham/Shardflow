@@ -93,3 +93,36 @@ the recovery link would have been auto-consumed by the Supabase client as a norm
   tighten if stricter "recent reauth" semantics are needed.
 - **Rate limiter is in-memory per process**; use a shared store if the backend scales out.
 - **Setup required:** add the frontend `/reset-password` URL to Supabase's redirect allow-list.
+
+---
+
+## D3 — Tenant Context Propagation & Fail-Closed Database Execution
+
+### What was happening
+
+A high-severity cross-tenant exposure risk existed in the Data Plane pipeline:
+1. **Context Drop**: Tenant identity was used only in `RoutingEngine.resolveShard` to select the database shard. Once the shard was resolved, the query was forwarded to `DatabaseExecutor.execute(shard, request)` without carrying any tenant context.
+2. **Missing Invariant**: Neither `DatabaseExecutor` nor individual operation executors (`find`, `find-one`, `insert-one`, `update-one`, `delete-one`) received, validated, or verified tenant context at the database call boundary.
+3. **Fail-Open Risk**: If a request lacked a tenant identifier or experienced context loss, operations could run blindly against the target shard.
+4. **Data Leakage in Observability**: Driver errors (e.g. duplicate key errors E11000) echoed raw Mongo error messages containing unredacted customer document data.
+
+### What was fixed
+
+- **`TenantContext` Model (`data-request.model.ts`)**: Introduced a typed `TenantContext` interface carrying `tenantId` and `projectId`.
+- **Authentication & Middleware (`data-plane-auth.middleware.ts`)**: `DataPlaneContext` now incorporates `tenantContext`. Resolves tenant identity from `X-Tenant-Id` header and/or request body, enforcing consistency and rejecting format violations with `INVALID_TENANT_ID` (400) or mismatches with `TENANT_ACCESS_DENIED` (403).
+- **Controller (`data-plane.controller.ts`)**: Rejects unresolvable tenant requests with `TENANT_RESOLUTION_FAILED` (400), constructs explicit `tenantContext`, and passes it with contextual logging to `DataPlaneService`.
+- **Service Layer (`data-plane.service.ts`)**: Explicitly accepts and validates `TenantContext`. Verifies project and tenant match the authenticated scope, and propagates `resolvedTenantContext` into `DatabaseExecutor.execute`.
+- **Database Executor (`database-executor.ts`)**:
+  - Requires `TenantContext` and fails closed with `TENANT_ACCESS_DENIED` (403) if missing, empty, or mismatched with the request payload.
+  - Every operation (`executeFind`, `executeFindOne`, `executeInsertOne`, `executeUpdateOne`, `executeDeleteOne`) enforces context availability at the point of the database driver call.
+  - Structured logging emits strictly tenant and project identifiers (`tenantId`, `projectId`, `shardId`, `operation`, `collection`) without query or document contents.
+  - Error messages and logs are sanitized so duplicate key errors or driver timeouts never leak customer document data.
+- **Tests**:
+  - Unit tests in `database-executor.test.ts` (11 tests) verifying fail-closed invariant, context availability across all operations, safe logging without data contents, and sanitized error messages.
+  - Integration tests in `data-plane.routes.test.ts` verifying end-to-end context preservation from HTTP request to driver execution, `X-Tenant-Id` header resolution, and fail-closed rejections.
+
+### Verification
+
+- `npx vitest run src/data-plane` — 34/34 passing.
+- `npm test` — all 27 test files passing (337/337 tests).
+- `npm run typecheck` — 0 TypeScript errors.

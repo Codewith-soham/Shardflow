@@ -1,5 +1,16 @@
 import { z } from 'zod';
 
+// ─── Tenant Context ──────────────────────────────────────────────────────────
+
+/**
+ * Tenant context carried through the data-plane execution pipeline.
+ * Guarantees tenant identity is preserved from authentication through to MongoDB driver call.
+ */
+export interface TenantContext {
+  tenantId: string;
+  projectId: string;
+}
+
 // ─── Supported Operations ─────────────────────────────────────────────────────
 
 /**

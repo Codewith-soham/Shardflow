@@ -433,5 +433,167 @@ describe('Data Plane Core — Phase 4', () => {
         documents: [{ _id: '1', name: 'Acme User' }],
       });
     });
+
+    it('rejects request with 400 TENANT_RESOLUTION_FAILED when tenantId cannot be resolved', async () => {
+      const app = await buildApp(testConfig, {
+        dataPlaneAuthOptions: {
+          apiKeyRepository: mocks.mockApiKeyRepo as any,
+          projectRepository: mocks.mockProjectRepo as any,
+        },
+      });
+
+      const res = await app.inject({
+        method: 'POST',
+        url: '/api/v1/data',
+        headers: {
+          'x-api-key': rawApiKey,
+        },
+        payload: {
+          operation: 'find',
+          collection: 'users',
+        },
+      });
+
+      expect(res.statusCode).toBe(400);
+      const body = JSON.parse(res.payload);
+      expect(body.success).toBe(false);
+      expect(body.error.code).toBe(ErrorCode.TENANT_RESOLUTION_FAILED);
+    });
+
+    it('rejects request with 403 TENANT_ACCESS_DENIED when X-Tenant-Id header mismatches body tenantId', async () => {
+      const app = await buildApp(testConfig, {
+        dataPlaneAuthOptions: {
+          apiKeyRepository: mocks.mockApiKeyRepo as any,
+          projectRepository: mocks.mockProjectRepo as any,
+        },
+      });
+
+      const res = await app.inject({
+        method: 'POST',
+        url: '/api/v1/data',
+        headers: {
+          'x-api-key': rawApiKey,
+          'x-tenant-id': 'tenant_acme',
+        },
+        payload: {
+          tenantId: 'tenant_other',
+          operation: 'find',
+          collection: 'users',
+        },
+      });
+
+      expect(res.statusCode).toBe(403);
+      const body = JSON.parse(res.payload);
+      expect(body.success).toBe(false);
+      expect(body.error.code).toBe(ErrorCode.TENANT_ACCESS_DENIED);
+    });
+
+    it('confirms tenant context is preserved and available at execution time in DatabaseExecutor', async () => {
+      let receivedTenantContext: any = null;
+      let receivedShard: any = null;
+
+      const mockDatabaseExecutor = {
+        execute: async (shardArg: any, _req: any, contextArg: any) => {
+          receivedShard = shardArg;
+          receivedTenantContext = contextArg;
+          return {
+            documents: [{ _id: '1', name: 'Acme User' }],
+          };
+        },
+      };
+
+      const { DataPlaneService } = await import('../services/data-plane.service.js');
+      const { RoutingEngine } = await import('../services/routing-engine.js');
+
+      const routingEngine = new RoutingEngine(
+        mocks.mockTenantMappingRepo as any,
+        mocks.mockShardRepo as any,
+        { findByProjectId: async () => null } as any
+      );
+      const service = new DataPlaneService(
+        routingEngine,
+        mockDatabaseExecutor as any
+      );
+
+      const app = await buildApp(testConfig, {
+        dataPlaneAuthOptions: {
+          apiKeyRepository: mocks.mockApiKeyRepo as any,
+          projectRepository: mocks.mockProjectRepo as any,
+        },
+        dataPlaneService: service,
+      });
+
+      const res = await app.inject({
+        method: 'POST',
+        url: '/api/v1/data',
+        headers: {
+          'x-api-key': rawApiKey,
+        },
+        payload: {
+          tenantId: 'tenant_acme',
+          operation: 'find',
+          collection: 'users',
+        },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(receivedShard).toBeDefined();
+      expect(receivedShard._id.toString()).toBe(shard._id.toString());
+      expect(receivedTenantContext).toBeDefined();
+      expect(receivedTenantContext.tenantId).toBe('tenant_acme');
+      expect(receivedTenantContext.projectId).toBe(project._id.toString());
+    });
+
+    it('resolves tenant context from X-Tenant-Id header when omitted from payload', async () => {
+      let receivedTenantContext: any = null;
+
+      const mockDatabaseExecutor = {
+        execute: async (_shardArg: any, _req: any, contextArg: any) => {
+          receivedTenantContext = contextArg;
+          return {
+            documents: [{ _id: '1', name: 'Acme User' }],
+          };
+        },
+      };
+
+      const { DataPlaneService } = await import('../services/data-plane.service.js');
+      const { RoutingEngine } = await import('../services/routing-engine.js');
+
+      const routingEngine = new RoutingEngine(
+        mocks.mockTenantMappingRepo as any,
+        mocks.mockShardRepo as any,
+        { findByProjectId: async () => null } as any
+      );
+      const service = new DataPlaneService(
+        routingEngine,
+        mockDatabaseExecutor as any
+      );
+
+      const app = await buildApp(testConfig, {
+        dataPlaneAuthOptions: {
+          apiKeyRepository: mocks.mockApiKeyRepo as any,
+          projectRepository: mocks.mockProjectRepo as any,
+        },
+        dataPlaneService: service,
+      });
+
+      const res = await app.inject({
+        method: 'POST',
+        url: '/api/v1/data',
+        headers: {
+          'x-api-key': rawApiKey,
+          'x-tenant-id': 'tenant_acme',
+        },
+        payload: {
+          operation: 'find',
+          collection: 'users',
+        },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(receivedTenantContext).toBeDefined();
+      expect(receivedTenantContext.tenantId).toBe('tenant_acme');
+      expect(receivedTenantContext.projectId).toBe(project._id.toString());
+    });
   });
 });

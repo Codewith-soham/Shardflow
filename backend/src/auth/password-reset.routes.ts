@@ -37,7 +37,9 @@ export function registerPasswordResetRoutes(
     enforce(limiter.forgot, request, 'forgot');
     const { email } = validateData(forgotPasswordSchema, request.body);
 
-    await service.requestReset(email);
+    await service.requestReset(email, (info) =>
+      request.log.warn({ ...info }, 'Password reset email not sent by auth provider')
+    );
 
     reply.status(202);
     return {

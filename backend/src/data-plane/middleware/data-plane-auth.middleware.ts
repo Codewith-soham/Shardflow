@@ -1,9 +1,11 @@
 import type { FastifyRequest, FastifyReply } from 'fastify';
 
 import { ErrorCode } from '../../errors/codes.js';
-import { UnauthorizedError, ForbiddenError, NotFoundError } from '../../errors/app-error.js';
+import { UnauthorizedError, ForbiddenError, NotFoundError, BadRequestError } from '../../errors/app-error.js';
+import { markAuthGuard } from '../../auth/route-guard.js';
 import {
   hashApiKey,
+  verifyApiKeyHash,
   isApiKeyActive,
   type ApiKey,
   type Project,
@@ -11,10 +13,12 @@ import {
   ApiKeyRepository,
   ProjectRepository,
 } from '../../control-plane/index.js';
+import type { TenantContext } from '../models/data-request.model.js';
 
 export interface DataPlaneContext {
   apiKey: ApiKey;
   project: Project;
+  tenantContext?: TenantContext;
 }
 
 declare module 'fastify' {
@@ -42,7 +46,7 @@ export function createDataPlaneAuthMiddleware(options: DataPlaneAuthOptions = {}
   const apiKeyRepo = options.apiKeyRepository ?? new ApiKeyRepository();
   const projectRepo = options.projectRepository ?? new ProjectRepository();
 
-  return async function dataPlaneAuthMiddleware(
+  return markAuthGuard(async function dataPlaneAuthMiddleware(
     request: FastifyRequest,
     _reply: FastifyReply
   ): Promise<void> {
@@ -55,10 +59,10 @@ export function createDataPlaneAuthMiddleware(options: DataPlaneAuthOptions = {}
       );
     }
 
-    const keyHash = hashApiKey(rawApiKey.trim());
-    const apiKey = await apiKeyRepo.findByKeyHash(keyHash);
+    const presentedKey = rawApiKey.trim();
+    const apiKey = await apiKeyRepo.findByKeyHash(hashApiKey(presentedKey));
 
-    if (!apiKey) {
+    if (!apiKey || !verifyApiKeyHash(presentedKey, apiKey.keyHash)) {
       throw new UnauthorizedError(
         'Invalid API key',
         ErrorCode.INVALID_API_KEY
@@ -97,9 +101,39 @@ export function createDataPlaneAuthMiddleware(options: DataPlaneAuthOptions = {}
     // Record key usage asynchronously (fire-and-forget)
     apiKeyRepo.updateLastUsed(apiKey._id).catch(() => {});
 
+    const rawHeaderTenantId = request.headers['x-tenant-id'];
+    let tenantContext: TenantContext | undefined;
+
+    if (rawHeaderTenantId !== undefined) {
+      if (typeof rawHeaderTenantId !== 'string' || rawHeaderTenantId.trim() === '' || rawHeaderTenantId.trim().length > 256) {
+        throw new BadRequestError('Invalid X-Tenant-Id header format', ErrorCode.INVALID_TENANT_ID);
+      }
+      const tenantId = rawHeaderTenantId.trim();
+      const bodyTenantId = (request.body as Record<string, unknown> | undefined)?.tenantId;
+      if (typeof bodyTenantId === 'string' && bodyTenantId.trim() !== '' && bodyTenantId.trim() !== tenantId) {
+        throw new ForbiddenError(
+          'Tenant context mismatch between X-Tenant-Id header and request payload',
+          ErrorCode.TENANT_ACCESS_DENIED
+        );
+      }
+      tenantContext = {
+        tenantId,
+        projectId: project._id.toString(),
+      };
+    } else {
+      const bodyTenantId = (request.body as Record<string, unknown> | undefined)?.tenantId;
+      if (typeof bodyTenantId === 'string' && bodyTenantId.trim() !== '') {
+        tenantContext = {
+          tenantId: bodyTenantId.trim(),
+          projectId: project._id.toString(),
+        };
+      }
+    }
+
     request.dataPlaneContext = {
       apiKey,
       project,
+      tenantContext,
     };
-  };
+  });
 }
